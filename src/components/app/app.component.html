@@ -1,0 +1,21 @@
+<div class="col-lg-12">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <ng2-multi-selector #multiselector="ng2-multi-selector"
+                          [items]="items"
+                          [display-property]="'name'"
+                          [is-clear-button-available]="true"
+                          (search-items)="searchItem($event)">
+      </ng2-multi-selector>
+    </div>
+    <div class="panel-body">
+      <ul>
+        <li *ngFor="let item of multiselector.getChosenItems()">
+          {{item.name}} - {{item.age}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+

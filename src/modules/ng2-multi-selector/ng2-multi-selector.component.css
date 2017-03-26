@@ -1,0 +1,9 @@
+.ng2-multi-selector .dropdown-menu {
+  width: 100%
+}
+
+input.ng2-multi-selector-title-box {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
