@@ -1,6 +1,5 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {Observable} from 'rxjs/Rx'
-import {NgModel} from "@angular/forms";
 
 @Component({
   selector: 'ng2-multi-selector',
@@ -9,7 +8,19 @@ import {NgModel} from "@angular/forms";
   styles: ['ng2-multi-selector.component.css']
 })
 
-export class Ng2MultiSelectorComponent implements OnInit {
+export class Ng2MultiSelectorComponent implements OnInit, AfterViewInit {
+
+  ngAfterViewInit(): void {
+    // Only catch the key up event of search text box if it is supported.
+    if (this.isSearchBoxAvailable) {
+      // Catch key up event of search box.
+      const inputStream = Observable.fromEvent(this.txtSearch.nativeElement, 'keyup')
+        .map(() => this.keyword.trim())
+        .debounceTime(400)
+        .distinctUntilChanged();
+      inputStream.subscribe(x => this.search.emit(x));
+    }
+  }
 
   // Inject search box into component.
   @ViewChild("txtSearch") txtSearch: ElementRef;
@@ -42,13 +53,13 @@ export class Ng2MultiSelectorComponent implements OnInit {
 
   // Event emitter which is emitted when data should be submitted to server.
   @Output('search-items')
-  private search : EventEmitter<string>;
+  private search: EventEmitter<string>;
 
   // Item which have been chosen.
-  private chosenItems : Array<any>;
+  private chosenItems: Array<any>;
 
   // Initiate components with injectors (as available)
-  public constructor(){
+  public constructor() {
     this.chosenItems = new Array<any>();
     this.search = new EventEmitter<string>();
   }
@@ -56,19 +67,11 @@ export class Ng2MultiSelectorComponent implements OnInit {
   // This callback is fired when component has been initiated to server successfully.
   ngOnInit(): void {
 
-    // Only catch the key up event of search text box if it is supported.
-    if (this.isSearchBoxAvailable) {
-      // Catch key up event of search box.
-      const inputStream = Observable.fromEvent(this.txtSearch.nativeElement, 'keyup')
-        .map(() => this.keyword.trim())
-        .debounceTime(400)
-        .distinctUntilChanged();
-      inputStream.subscribe(x => this.search.emit(x));
-    }
+
   }
 
   // Check whether item has been chosen or not.
-  private isChosen(item: any) : boolean{
+  private isChosen(item: any): boolean {
 
     // Items list is empty.
     if (this.chosenItems == null || this.chosenItems.length < 1)
@@ -82,16 +85,24 @@ export class Ng2MultiSelectorComponent implements OnInit {
     if (this.chosenItems == null || this.chosenItems.length < 1)
       return "";
 
-    return this.chosenItems.map(x => { return x[this.displayProperty]}) .join(',').slice(0, 255);
+    return this.chosenItems.map(x => {
+      return x[this.displayProperty]
+    }).join(',').slice(0, 255);
   }
 
   // Clear chosen items list.
-  private clearChosenItems() : void{
+  private clearChosenItems(): void {
+
+    // Clear button is not supported.
+    if (!this.isClearButtonAvailable)
+      return;
+
+    // Initiate new array.
     this.chosenItems = new Array<any>();
   }
 
   // Select an item in list.
-  private selectItem(item: any): void{
+  private selectItem(item: any): void {
     // Find item index in array.
     let itemIndex = this.chosenItems.indexOf(item);
 

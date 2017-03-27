@@ -4,6 +4,7 @@
       <ng2-multi-selector #multiselector="ng2-multi-selector"
                           [items]="items"
                           [display-property]="'name'"
+                          [is-search-box-available]="true"
                           [is-clear-button-available]="true"
                           (search-items)="searchItem($event)">
       </ng2-multi-selector>
