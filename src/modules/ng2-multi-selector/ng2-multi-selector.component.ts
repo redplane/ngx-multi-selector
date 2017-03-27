@@ -28,11 +28,17 @@ export class Ng2MultiSelectorComponent implements OnInit {
   @Input('is-clear-button-available')
   private isClearButtonAvailable: boolean;
 
+  @Input('is-search-box-available')
+  private isSearchBoxAvailable: boolean;
+
   @Input('limit-items-number')
   private limitItemsNumber: number;
 
   @Input('placeholder-search-drop-down')
   private placeholderSearchDropDown: string;
+
+  @Input('separation-character')
+  private szSeparationCharacter: string;
 
   // Event emitter which is emitted when data should be submitted to server.
   @Output('search-items')
@@ -49,12 +55,16 @@ export class Ng2MultiSelectorComponent implements OnInit {
 
   // This callback is fired when component has been initiated to server successfully.
   ngOnInit(): void {
-    // Catch key up event of search box.
-    const inputStream = Observable.fromEvent(this.txtSearch.nativeElement, 'keyup')
-      .map(() => this.keyword.trim())
-      .debounceTime(400)
-      .distinctUntilChanged();
-    inputStream.subscribe(x => this.search.emit(x));
+
+    // Only catch the key up event of search text box if it is supported.
+    if (this.isSearchBoxAvailable) {
+      // Catch key up event of search box.
+      const inputStream = Observable.fromEvent(this.txtSearch.nativeElement, 'keyup')
+        .map(() => this.keyword.trim())
+        .debounceTime(400)
+        .distinctUntilChanged();
+      inputStream.subscribe(x => this.search.emit(x));
+    }
   }
 
   // Check whether item has been chosen or not.

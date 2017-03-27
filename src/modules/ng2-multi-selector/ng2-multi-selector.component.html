@@ -25,11 +25,13 @@
           <input #txtSearch
                  class="form-control"
                  placeholder="{{placeholderSearchDropDown}}"
-                 [(ngModel)]="keyword">
+                 [(ngModel)]="keyword"
+                 *ngIf="isSearchBoxAvailable">
         </div>
     </li>
     <li>
-      <div class="col-lg-12">
+      <div class="col-lg-12"
+           *ngIf="isSearchBoxAvailable">
         <hr/>
       </div>
     </li>

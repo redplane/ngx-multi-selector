@@ -1,0 +1,28 @@
+{
+  "name": "ng2-multi-selector",
+  "version": "1.0.1",
+  "description": "A small plugin which generates multi-selector control, it supports web api loading.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "rxjs": "^5.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redplane/ng2-multi-selector.git"
+  },
+  "keywords": [
+    "ng2-multi-selector",
+    "multi-selector",
+    "multi-drop-down",
+    "drop-down"
+  ],
+  "author": "Linh Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/redplane/ng2-multi-selector/issues"
+  },
+  "homepage": "https://github.com/redplane/ng2-multi-selector#readme"
+}
