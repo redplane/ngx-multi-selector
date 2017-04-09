@@ -5,6 +5,8 @@ import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
 import {Ng2MultiSelectorModule} from "../../modules/ng2-multi-selector/ng2-multi-selector.module";
+import {ICategoryService} from "../../interfaces/customer-service.interface";
+import {CategoryServiceMock} from "../../services/mocks/category-service.mock";
 
 @NgModule({
   declarations: [
@@ -17,8 +19,14 @@ import {Ng2MultiSelectorModule} from "../../modules/ng2-multi-selector/ng2-multi
 
     Ng2MultiSelectorModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: "ICategoryService",
+      useClass: CategoryServiceMock
+    }
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }
