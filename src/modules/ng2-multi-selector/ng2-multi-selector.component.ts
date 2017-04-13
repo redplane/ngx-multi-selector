@@ -1,4 +1,14 @@
-import {AfterViewInit, ApplicationRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild, ChangeDetectorRef} from "@angular/core";
+import {
+  AfterViewInit,
+  ApplicationRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ChangeDetectorRef
+} from "@angular/core";
 import {Observable} from 'rxjs/Rx'
 
 @Component({
@@ -13,7 +23,7 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
   //#region Methods
 
   // This callback is fired when view has been initiated.
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     // Only catch the key up event of search text box if it is supported.
     if (this.isSearchBoxAvailable) {
       // Catch key up event of search box.
@@ -26,15 +36,12 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
   }
 
   // Check whether item has been chosen or not.
-  private getItemChosen(item: any): boolean {
-    if (this.getChosenItemIndex(item) != -1)
-      return true;
-
-    return false;
+  public getItemChosen(item: any): boolean {
+    return this.getChosenItemIndex(item) != -1;
   }
 
   // Find chosen item index in array.
-  private getChosenItemIndex(item: any): number{
+  public getChosenItemIndex(item: any): number {
     // Items list is empty.
     if (this.chosenItems == null || this.chosenItems.length < 1)
       return -1;
@@ -51,7 +58,7 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
   }
 
   // Get title which is used for being displayed on search box.
-  private getChosenItemsTitle(): string {
+  public getChosenItemsTitle(): string {
     if (this.chosenItems == null || this.chosenItems.length < 1)
       return "";
 
@@ -65,7 +72,7 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
   }
 
   // Clear chosen items list.
-  private clearChosenItems(): void {
+  public clearChosenItems(): void {
 
     // Clear button is not supported.
     if (!this.isClearButtonAvailable)
@@ -77,7 +84,7 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
   }
 
   // Select an item in list.
-  private clickSelectItem(item: any): void {
+  public clickSelectItem(item: any): void {
     // Find item index in array.
     let itemIndex = this.getChosenItemIndex(item);
 
@@ -143,6 +150,9 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
 
   @Input('separation-character')
   private szSeparationCharacter: string;
+
+  @Input("disabled")
+  private disabled: boolean;
 
   // Event emitter which is emitted when data should be submitted to server.
   @Output('search-items')

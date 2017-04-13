@@ -2,13 +2,13 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <ng2-multi-selector #multiselector="ng2-multi-selector"
-                          [items]="categories"
-                          [display-property]="'CategoryName'"
+                          [items]="customers"
+                          [display-property]="'ContactName'"
                           [is-search-box-available]="true"
                           [is-clear-button-available]="true"
                           [placeholder-search-drop-down]="'Please select an item'"
                           [separation-character]="' - '"
-                          [key]="'CategoryID'"
+                          [key]="'Id'"
                           (search-items)="searchItem($event)">
       </ng2-multi-selector>
     </div>

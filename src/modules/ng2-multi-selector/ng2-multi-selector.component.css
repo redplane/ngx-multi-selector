@@ -9,3 +9,11 @@ input .ng2-multi-selector-title-box {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.ng2-multi-selector-title-box{
+  background-color: white !important;
+}
+
+.ng2-multi-selector-title-box:disabled{
+  background-color: #eee !important;
+}

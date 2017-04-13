@@ -1,7 +1,8 @@
 import {Response} from "@angular/http";
 
-export interface ICategoryService{
+export interface ICustomerService{
 
-  // Get categories from database.
-  getCategories(keyword: string): Promise<Response>;
+  // Get list of customers.
+  getCustomers(): Promise<Response>;
+
 }

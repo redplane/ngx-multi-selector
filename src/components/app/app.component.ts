@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ICategoryService} from "../../interfaces/customer-service.interface";
+import {ICustomerService} from "../../interfaces/customer-service.interface";
 import {Response} from "@angular/http";
-import {Category} from "../../models/category";
+import {Customer} from "../../models/customer";
+import {GetCustomerResult} from "../../models/get-customer";
 
 @Component({
   selector: 'app-root',
@@ -10,23 +11,29 @@ import {Category} from "../../models/category";
 export class AppComponent implements OnInit {
 
   // List of items which should be shown up in the multi selector.
-  private categories: Array<Category>;
+  private customers: Array<Customer>;
 
 
-  public constructor(@Inject("ICategoryService") public categoryService: ICategoryService) {
+  public constructor(@Inject("ICustomerService") public customerService: ICustomerService) {
   }
 
   ngOnInit(): void {
-    this.categoryService.getCategories(null)
+    this.customerService.getCustomers()
       .then((x: Response) => {
-        this.categories = x.json();
-      })
+        let result = <GetCustomerResult> x.json();
+        this.customers = result.Customers;
+      });
   }
 
   public searchItem(keyword: string): void {
-    this.categoryService.getCategories(keyword)
+    this.customerService.getCustomers()
       .then((x: Response) => {
-        this.categories = x.json();
-      })
+        let result = <GetCustomerResult> x.json();
+        let customers = result.Customers;
+
+        this.customers = customers.filter((x: Customer) => {
+          return x.ContactName.toLowerCase().indexOf(keyword.toLowerCase()) != -1;
+        });
+      });
   }
 }
