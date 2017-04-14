@@ -10,11 +10,14 @@ import {GetCustomerResult} from "../../models/get-customer";
 })
 export class AppComponent implements OnInit {
 
+  private items: Array<Customer>;
+
   // List of items which should be shown up in the multi selector.
   private customers: Array<Customer>;
 
 
   public constructor(@Inject("ICustomerService") public customerService: ICustomerService) {
+    this.items = new Array<Customer>();
   }
 
   ngOnInit(): void {
@@ -35,5 +38,11 @@ export class AppComponent implements OnInit {
           return x.ContactName.toLowerCase().indexOf(keyword.toLowerCase()) != -1;
         });
       });
+  }
+
+  // This callback is fired when items list is updated.
+  public updateCustomers(items: Array<Customer>): void{
+    console.log(items);
+    this.items = items;
   }
 }

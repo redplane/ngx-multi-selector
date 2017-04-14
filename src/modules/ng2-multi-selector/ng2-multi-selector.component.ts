@@ -27,11 +27,24 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
     // Only catch the key up event of search text box if it is supported.
     if (this.isSearchBoxAvailable) {
       // Catch key up event of search box.
-      const inputStream = Observable.fromEvent(this.txtSearch.nativeElement, 'keyup')
-        .map(() => this.keyword.trim())
-        .debounceTime(400)
-        .distinctUntilChanged();
-      inputStream.subscribe(x => this.search.emit(x));
+      const inputStream = Observable
+        .fromEvent(this.txtSearch.nativeElement, 'keyup')
+        .map((x: KeyboardEvent) => {
+          return x.key;
+        })
+        .filter((x: string) => {
+          return (x != null && x.length > 0 && x != ' ');
+        })
+        .debounceTime(this.interval)
+        .distinctUntilChanged()
+        .subscribe(() => {
+            // Clear previous search results.
+            this.items = new Array<any>();
+
+            // Emit the search event to outer element.
+            this.search.emit(this.txtSearch.nativeElement.value)
+          }
+        );
     }
   }
 
@@ -91,7 +104,7 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
     // Item hasn't been chosen.
     if (itemIndex == null || itemIndex < 0) {
       // Maximum selected item exceeded.
-      if (this.chosenItems.length >= this.limitItemsNumber)
+      if (this.limitItemSelection != null && this.chosenItems.length >= this.limitItemSelection)
         return;
 
       this.chosenItems.push(item);
@@ -116,10 +129,8 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
   //#region Properties
 
   // Inject search box into component.
-  @ViewChild("txtSearch") txtSearch: ElementRef;
-
-  // Search key word.
-  private keyword: string;
+  @ViewChild("txtSearch")
+  private txtSearch: ElementRef;
 
   // Key which is for recognizing whether item is in the chosen list or not.
   @Input("key")
@@ -133,26 +144,41 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
   @Input('items')
   public items: Array<any>;
 
+  // Whether clear button should be available or not.
   @Input('is-clear-button-available')
   private isClearButtonAvailable: boolean;
 
+  // Whether search box should be available or not.
   @Input('is-search-box-available')
   private isSearchBoxAvailable: boolean;
 
-  @Input('limit-items-number')
-  private limitItemsNumber: number;
+  // How many items should be shown to be selected.
+  @Input('limit-item-amount')
+  private limitItemAmount: number;
 
+  // How many items can be selected.
+  @Input("limit-item-selection")
+  private limitItemSelection: number;
+
+  // Place holder of search box in drop-down list.
   @Input('placeholder-search-drop-down')
   private placeholderSearchDropDown: string;
 
+  // Place holder of title.
   @Input('placeholder-title-drop-down')
   private placeholderTitleDropDown: string;
 
+  // Character which is used for dividing searched items.
   @Input('separation-character')
   private szSeparationCharacter: string;
 
+  // Whether component is disabled or not.
   @Input("disabled")
   private disabled: boolean;
+
+  // How much time should component raise another one about its changes.
+  @Input("interval")
+  private interval: number;
 
   // Event emitter which is emitted when data should be submitted to server.
   @Output('search-items')
@@ -175,7 +201,14 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
     this.search = new EventEmitter<string>();
     this.updateItemEventEmitter = new EventEmitter<Array<any>>();
     this.items = new Array<any>();
+
+    // By default, items amount is limited to 10.
+    this.limitItemAmount = 10;
+
+    // By default, interval should be 400ms.
+    this.interval = 400;
   }
 
   //#endregion
+
 }

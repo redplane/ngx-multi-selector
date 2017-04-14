@@ -9,13 +9,14 @@
                           [placeholder-search-drop-down]="'Please select an item'"
                           [separation-character]="' - '"
                           [key]="'Id'"
-                          (search-items)="searchItem($event)">
+                          (search-items)="searchItem($event)"
+                          (update-items)="updateCustomers($event)">
       </ng2-multi-selector>
     </div>
     <div class="panel-body">
       <ul>
         <li *ngFor="let item of multiselector.getChosenItems()">
-          {{item.CategoryID}} - {{item.CategoryName}}
+          {{item.Id}} - {{item.CompanyName}}
         </li>
       </ul>
     </div>

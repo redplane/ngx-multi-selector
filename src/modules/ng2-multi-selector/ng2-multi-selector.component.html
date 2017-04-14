@@ -3,14 +3,12 @@
        [attr.data-toggle]="disabled ? '': 'dropdown'"
        aria-haspopup="true"
        aria-expanded="false"
-       [attr.disabled]="disabled"
-       >
+       [attr.disabled]="disabled">
     <input class="form-control ng2-multi-selector-title-box"
            readonly="readonly"
            value="{{getChosenItemsTitle()}}"
            placeholder="{{placeholderTitleDropDown}}"
-           [attr.disabled]="disabled"
-           >
+           [attr.disabled]="disabled">
   </div>
   <span class="input-group-addon dropdown-toggle"
         [attr.data-toggle]="disabled ? '': 'dropdown'"
@@ -43,10 +41,11 @@
         </div>
       </div>
     </li>
-    <li *ngFor="let item of items"
+    <li *ngFor="let item of items; let i = index"
         [class.active]="getItemChosen(item)"
         (click)="clickSelectItem(item)">
-      <a href="javascript:void(0);">
+      <a href="javascript:void(0);"
+         *ngIf="i < limitItemAmount">
         <span class="glyphicon glyphicon-check"
               *ngIf="getItemChosen(item)"></span> {{item[displayProperty]}}
       </a>
