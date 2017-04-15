@@ -1,37 +1,41 @@
-## Welcome to GitHub Pages
+### ng2-multi-drop-down-selector
 
-You can use the [editor on GitHub](https://github.com/redplane/ng2-multi-selector/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Description:
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+ * This component provides a control which helps user to find records in service using keyword.
+ * More than one item can be selected.
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Online demo can be found [here](http://ng2-multi-drop-down-selector.getforge.io/):
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```javascript
+<ng2-multi-selector #multiselector="ng2-multi-selector"
+					[items]="customers"
+                    [display-property]="'ContactName'"
+                    [is-search-box-available]="true"
+                    [is-clear-button-available]="true"
+                    [placeholder-search-drop-down]="'Please select an item'"
+                    [separation-character]="' - '"
+                    [key]="'Id'"
+                    (search-items)="searchItem($event)"
+                    (update-items)="updateCustomers($event)">
+</ng2-multi-selector>
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/redplane/ng2-multi-selector/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Options:
+ * ```key``` (string): Property of object which determines whether item has been selected or not.
+ * ```display-property``` (string): Property which should be used for item display.
+ * ```items``` (Array<any>): List of items which should be displayed inside drop-down menu.
+ * ```is-clear-button-available``` (boolean): Whether clear button is available or not. This button is for cleaning chosen items list.
+ * ```is-search-box-available``` (boolean): Whether search box is available or not. The search box is for typing keyword to search.
+ * ```limit-item-amount``` (number): Number of items which can be displayed inside drop-down menu.
+ * ```limit-item-selection``` (number): Maximum number of items which can be selected
+ * ```placeholder-search-drop-down``` (string): Place holder text of search box inside drop-down list.
+ * ```placeholder-title-drop-down``` (string): Pleace holder text of title box.
+ * ```separation-character``` (string): Character which is used for separating items and items.
+ * ```disabled``` (boolean): Whether multi drop-down selector control is disabled or not.
+ * ```interval``` (number): Time between 2 times of emitting search event to another component to do the search.
+ 
+### Events:
+ * ```search-items (keyword: string)```: This event is fired when component detects value changed. This event is fired with keyword, another component can use that keyword to search records in data source.
+ * ```update-items(items: Array<any>)```: This event is fired when chosen items list is modified. This event can be used for handling changes in chosen items list.
