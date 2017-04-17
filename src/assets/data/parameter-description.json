@@ -1,0 +1,100 @@
+{
+  "inputs": [
+    {
+      "parameter": "key",
+      "description": "Which property determines items unique. Its like the primary key.",
+      "default": "null",
+      "type": "string"
+    },
+    {
+      "parameter": "display-property",
+      "description": "Which property should be used for being displayed on search box and result box.",
+      "default": "null",
+      "type": "string"
+    },
+    {
+      "parameter": "items",
+      "description": "List of items which should be displayed inside drop-down menu.",
+      "default": "null",
+      "type": "Array<any>"
+    },
+    {
+      "parameter": "is-clear-button-available",
+      "description": "Whether clear button is available. This button is for wipe items selection out.",
+      "default": "false",
+      "type": "boolean"
+    },
+    {
+      "parameter": "is-search-box-available",
+      "description": "Whether search box should be displayed inside drop-down menu or not",
+      "default": "false",
+      "type": "boolean"
+    },
+    {
+      "parameter": "limit-item-amount",
+      "description": "Number of items which can be displayed inside drop-down menu.",
+      "default": "10",
+      "type": "number"
+    },
+    {
+      "parameter": "limit-item-selection",
+      "description": "Maximum number of items which can be selected",
+      "default": "null",
+      "type": "number"
+    },
+    {
+      "parameter": "placeholder-search-drop-down",
+      "description": "Place holder text of search box inside drop-down list.",
+      "default": "null",
+      "type": "number"
+    },
+    {
+      "parameter": "placeholder-title-drop-down",
+      "description": "Pleace holder text of title box",
+      "default": "null",
+      "type": "string"
+    },
+    {
+      "parameter": "separation-character",
+      "description": "Character which is used for separating items and items.",
+      "default": "' '",
+      "type": "string"
+    },
+    {
+      "parameter": "disabled",
+      "description": "Whether multi drop-down selector control is disabled or not.",
+      "default": "false",
+      "type": "boolean"
+    },
+    {
+      "parameter": "interval",
+      "description": "Time between 2 times of emitting search event to another component to do the search",
+      "default": "400",
+      "type": "boolean"
+    }
+  ],
+  "outputs": [
+    {
+      "parameter": "search-items",
+      "description": "This event is fired when component detects value changed. This event is fired with keyword, another component can use that keyword to search records in data source",
+      "arguments": [
+        {
+          "name": "keyword",
+          "type": "string",
+          "description": "Keyword which can be used for searching data from data source."
+        }
+      ]
+    },
+    {
+      "parameter": "update-items",
+      "description": "This event is fired when chosen items list is modified. This event can be used for handling changes in chosen items list.",
+      "arguments": [
+        {
+          "name": "items",
+          "type": "Array<any>",
+          "description": "List of chosen items"
+        }
+      ]
+    }
+  ]
+}

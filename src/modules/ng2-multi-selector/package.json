@@ -1,6 +1,6 @@
 {
   "name": "ng2-multi-selector",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A small plugin which generates multi-selector control, it supports web api loading.",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "ng2-multi-selector",
     "multi-selector",
     "multi-drop-down",
-    "drop-down"
+    "drop-down",
+    "angular-2-drop-down",
+    "angular2-dropdown"
   ],
   "author": "Linh Nguyen",
   "license": "ISC",
