@@ -1,6 +1,6 @@
 {
   "name": "ng2-multi-selector",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A small plugin which generates multi-selector control, it supports web api loading.",
   "main": "index.js",
   "scripts": {
