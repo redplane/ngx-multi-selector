@@ -75,6 +75,8 @@ export class AppComponent implements OnInit {
   public updateCustomers(items: Array<Customer>): void {
     // Update selected items list.
     this.items = items;
+
+    console.log('update');
   }
 
   //#endregion

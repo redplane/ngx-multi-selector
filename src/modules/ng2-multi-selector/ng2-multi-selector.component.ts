@@ -94,6 +94,9 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
     // Initiate new array.
     this.chosenItems = new Array<any>();
     this.changeDetectorRef.detectChanges();
+
+    // Fire the update event.
+    this.updateItemEventEmitter.emit(this.chosenItems);
   }
 
   // Select an item in list.
