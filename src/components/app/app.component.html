@@ -129,6 +129,7 @@
                               [placeholder-search-drop-down]="'Please select an item'"
                               [separation-character]="' - '"
                               [key]="'Id'"
+                              [item-template]="customItemTemplate"
                               (search-items)="searchItem($event)"
                               (update-items)="updateCustomers($event)">
           </ng2-multi-selector>
@@ -144,7 +145,10 @@
   </div>
 </div>
 
-
-
+<ng-template #customItemTemplate
+          let-item="item"
+          let-i="index">
+  <h5>{{item | json}}</h5>
+</ng-template>
 
 

@@ -7,7 +7,7 @@ import {
   Input,
   Output,
   ViewChild,
-  ChangeDetectorRef
+  ChangeDetectorRef, TemplateRef
 } from "@angular/core";
 import {Observable} from 'rxjs/Rx'
 
@@ -24,11 +24,11 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
 
   // This callback is fired when view has been initiated.
   public ngAfterViewInit(): void {
+
     // Only catch the key up event of search text box if it is supported.
     if (this.isSearchBoxAvailable) {
       // Catch key up event of search box.
-      const inputStream = Observable
-        .fromEvent(this.txtSearch.nativeElement, 'keyup')
+      Observable.fromEvent(this.txtSearch.nativeElement, 'keyup')
         .map((x: KeyboardEvent) => {
           return x.key;
         })
@@ -193,6 +193,9 @@ export class Ng2MultiSelectorComponent implements AfterViewInit {
 
   // Item which have been chosen.
   private chosenItems: Array<any>;
+
+  @Input('item-template')
+  private itemTemplate: TemplateRef<any>;
 
   //#endregion
 

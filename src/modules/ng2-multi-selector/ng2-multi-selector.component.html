@@ -41,17 +41,43 @@
         </div>
       </div>
     </li>
-    <li *ngFor="let item of items; let i = index"
-        [class.active]="getItemChosen(item)"
-        (click)="clickSelectItem(item)">
-      <a href="javascript:void(0);"
-         *ngIf="i < limitItemAmount">
-        <span class="glyphicon glyphicon-check"
-              *ngIf="getItemChosen(item)"></span> {{item[displayProperty]}}
-      </a>
-    </li>
+
+    <ng-template ngFor
+                 let-item
+                 let-i="index"
+                 [ngForOf]="items">
+      <li [class.active]="getItemChosen(item)"
+          (click)="clickSelectItem(item)">
+        <a href="javascript:void(0);"
+           *ngIf="i < limitItemAmount">
+
+          <ng-template [ngTemplateOutlet]="itemTemplate || defaultItemTemplate"
+                       [ngOutletContext]="{item:item, index:i}"></ng-template>
+
+        </a>
+      </li>
+    </ng-template>
+
+    <!--Original implementation-->
+    <!--<li *ngFor="let item of items; let i = index"-->
+    <!--[class.active]="getItemChosen(item)"-->
+    <!--(click)="clickSelectItem(item)">-->
+    <!--<a href="javascript:void(0);"-->
+    <!--*ngIf="i < limitItemAmount">-->
+    <!--<span class="glyphicon glyphicon-check"-->
+    <!--*ngIf="getItemChosen(item)"></span> {{item[displayProperty]}}-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--End original implementation-->
+
+
   </ul>
 </div>
 
-
-
+<!--Default template of selected items list-->
+<ng-template #defaultItemTemplate let-item="item"
+             let-i="index">
+  <span class="glyphicon glyphicon-check"
+        *ngIf="getItemChosen(item)"></span>
+  {{item[displayProperty]}}
+</ng-template>
