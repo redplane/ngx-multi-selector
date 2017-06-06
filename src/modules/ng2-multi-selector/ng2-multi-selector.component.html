@@ -51,26 +51,12 @@
         <a href="javascript:void(0);"
            *ngIf="i < limitItemAmount">
 
+          <!--Item template-->
           <ng-template [ngTemplateOutlet]="itemTemplate || defaultItemTemplate"
                        [ngOutletContext]="{item:item, index:i}"></ng-template>
-
         </a>
       </li>
     </ng-template>
-
-    <!--Original implementation-->
-    <!--<li *ngFor="let item of items; let i = index"-->
-    <!--[class.active]="getItemChosen(item)"-->
-    <!--(click)="clickSelectItem(item)">-->
-    <!--<a href="javascript:void(0);"-->
-    <!--*ngIf="i < limitItemAmount">-->
-    <!--<span class="glyphicon glyphicon-check"-->
-    <!--*ngIf="getItemChosen(item)"></span> {{item[displayProperty]}}-->
-    <!--</a>-->
-    <!--</li>-->
-    <!--End original implementation-->
-
-
   </ul>
 </div>
 

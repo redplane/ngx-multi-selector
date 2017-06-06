@@ -19,6 +19,9 @@ export class AppComponent implements OnInit {
   // List of selected item.
   private items: Array<Customer>;
 
+  // List of items in second example.
+  private secondItems: Array<Customer>;
+
   // List of items which should be shown up in the multi selector.
   private customers: Array<Customer>;
 
@@ -75,10 +78,11 @@ export class AppComponent implements OnInit {
   public updateCustomers(items: Array<Customer>): void {
     // Update selected items list.
     this.items = items;
-
-    console.log('update');
   }
 
+  public updateSecondItems(items: Array<Customer>): void{
+    this.secondItems = items;
+  }
   //#endregion
 
   //#endregion

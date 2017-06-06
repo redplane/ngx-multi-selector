@@ -98,8 +98,8 @@
         </div>
       </div>
 
-      <h2 id="sample">
-        Sample
+      <h2 id="sample-1">
+        Example 1 - Normal drop-down list without search box.
       </h2>
       <div class="panel panel-default">
         <div class="panel-body">
@@ -129,13 +129,67 @@
                               [placeholder-search-drop-down]="'Please select an item'"
                               [separation-character]="' - '"
                               [key]="'Id'"
-                              [item-template]="customItemTemplate"
                               (search-items)="searchItem($event)"
                               (update-items)="updateCustomers($event)">
           </ng2-multi-selector>
 
           <ul>
             <li *ngFor="let item of multiselector.getChosenItems()">
+              {{item.Id}} - {{item.ContactName}} - {{item.CompanyName}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 id="sample-2">
+        Example 2 - Drop-down list with custom template.
+      </h2>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="control-label">
+            <b>Settings</b>
+          </div>
+          <ul>
+            <li><label class="label label-danger">[items]</label>='customers'</li>
+            <li><label class="label label-danger">[display-property]</label>="'ContactName'"</li>
+            <li><label class="label label-danger">[is-search-box-available]</label>="true"</li>
+            <li><label class="label label-danger">[is-clear-button-available]</label>="true"</li>
+            <li><label class="label label-danger">[placeholder-search-drop-down]</label>="'Please select an item'"</li>
+            <li><label class="label label-danger">[separation-character]</label>="' - '"</li>
+            <li><label class="label label-danger">[key]</label>="'Id'"</li>
+            <li><label class="label label-danger">(search-items)</label>="searchItem($event)"</li>
+            <li><label class="label label-danger">(update-items)</label>="updateCustomers($event)"</li>
+          </ul>
+          <hr/>
+          <div class="control-label">
+            <b>Template</b>
+          </div>
+          <ul>
+            <li>
+              Please view source for template. It is: #customItemTemplate
+            </li>
+          </ul>
+
+        </div>
+        <hr/>
+
+
+        <div class="panel-body">
+          <ng2-multi-selector #secondMultiDropdown="ng2-multi-selector"
+                              [items]="customers"
+                              [display-property]="'ContactName'"
+                              [is-search-box-available]="false"
+                              [is-clear-button-available]="true"
+                              [placeholder-search-drop-down]="'Please select an item'"
+                              [separation-character]="' - '"
+                              [key]="'Id'"
+                              [item-template]="customItemTemplate"
+                              (search-items)="searchItem($event)"
+                              (update-items)="updateSecondItems($event)">
+          </ng2-multi-selector>
+
+          <ul>
+            <li *ngFor="let item of secondMultiDropdown.getChosenItems()">
               {{item.Id}} - {{item.ContactName}} - {{item.CompanyName}}
             </li>
           </ul>
@@ -148,7 +202,13 @@
 <ng-template #customItemTemplate
           let-item="item"
           let-i="index">
-  <h5>{{item | json}}</h5>
+
+  <div class="input-group">
+      <img src="https://cdn.iconscout.com/public/images/icon/premium/png-256/avatar-head-einstein-albert-people-scientist-307b322794a41bbf-256x256.png"
+           height="32px"
+           width="32px">
+    <span> {{item.ContactName}}</span>
+  </div>
 </ng-template>
 
 
