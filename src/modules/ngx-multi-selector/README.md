@@ -1,15 +1,15 @@
-### ng2-multi-drop-down-selector
+### ngx-multi-drop-down-selector
 
 Description:
 
  * This component provides a control which helps user to find records in service using keyword.
  * More than one item can be selected.
-
+ * Angular >= 4 support.
 
 Online demo can be found [here](http://ng2-multi-drop-down-selector.getforge.io/):
 
 ```javascript
-<ng2-multi-selector #multiselector="ng2-multi-selector"
+<ngx-multi-selector #multiselector="ng2-multi-selector"
 					[items]="customers"
                     [display-property]="'ContactName'"
                     [is-search-box-available]="true"
@@ -19,7 +19,7 @@ Online demo can be found [here](http://ng2-multi-drop-down-selector.getforge.io/
                     [key]="'Id'"
                     (search-items)="searchItem($event)"
                     (update-items)="updateCustomers($event)">
-</ng2-multi-selector>
+</ngx-multi-selector>
 ```
 
 ### Options:
@@ -35,6 +35,7 @@ Online demo can be found [here](http://ng2-multi-drop-down-selector.getforge.io/
  * ```separation-character``` (string): Character which is used for separating items and items.
  * ```disabled``` (boolean): Whether multi drop-down selector control is disabled or not.
  * ```interval``` (number): Time between 2 times of emitting search event to another component to do the search.
+ * ```item-template``` (string): Template of item displayed in drop-down list.
  
 ### Events:
  * ```search-items (keyword: string)```: This event is fired when component detects value changed. This event is fired with keyword, another component can use that keyword to search records in data source.

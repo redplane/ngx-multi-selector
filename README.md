@@ -35,6 +35,7 @@ Online demo can be found [here](http://ng2-multi-drop-down-selector.getforge.io/
  * ```separation-character``` (string): Character which is used for separating items and items.
  * ```disabled``` (boolean): Whether multi drop-down selector control is disabled or not.
  * ```interval``` (number): Time between 2 times of emitting search event to another component to do the search.
+ * ```item-template``` (string): Template of item displayed in drop-down list.
  
 ### Events:
  * ```search-items (keyword: string)```: This event is fired when component detects value changed. This event is fired with keyword, another component can use that keyword to search records in data source.

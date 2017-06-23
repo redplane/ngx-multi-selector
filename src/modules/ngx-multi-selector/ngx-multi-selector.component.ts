@@ -206,6 +206,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
   // Item which have been chosen.
   private chosenItems: Array<any>;
 
+  // Custom item template.
   @Input('item-template')
   private itemTemplate: TemplateRef<any>;
 
