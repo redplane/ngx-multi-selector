@@ -121,7 +121,7 @@
         <hr/>
 
         <div class="panel-body">
-          <ng2-multi-selector #multiselector="ng2-multi-selector"
+          <ngx-multi-selector #multiselector="ngx-multi-selector"
                               [items]="customers"
                               [display-property]="'ContactName'"
                               [is-search-box-available]="false"
@@ -131,7 +131,7 @@
                               [key]="'Id'"
                               (search-items)="searchItem($event)"
                               (update-items)="updateCustomers($event)">
-          </ng2-multi-selector>
+          </ngx-multi-selector>
 
           <ul>
             <li *ngFor="let item of multiselector.getChosenItems()">
@@ -175,7 +175,7 @@
 
 
         <div class="panel-body">
-          <ng2-multi-selector #secondMultiDropdown="ng2-multi-selector"
+          <ngx-multi-selector #secondMultiDropdown="ngx-multi-selector"
                               [items]="customers"
                               [display-property]="'ContactName'"
                               [is-search-box-available]="false"
@@ -186,7 +186,7 @@
                               [item-template]="customItemTemplate"
                               (search-items)="searchItem($event)"
                               (update-items)="updateSecondItems($event)">
-          </ng2-multi-selector>
+          </ngx-multi-selector>
 
           <ul>
             <li *ngFor="let item of secondMultiDropdown.getChosenItems()">

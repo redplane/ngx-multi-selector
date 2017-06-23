@@ -1,5 +1,5 @@
 {
-  "name": "ng2-multi-selector",
+  "name": "ngx-multi-selector",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -12,17 +12,21 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/compiler": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/forms": "^4.0.0",
-    "@angular/http": "^4.0.0",
-    "@angular/platform-browser": "^4.0.0",
-    "@angular/platform-browser-dynamic": "^4.0.0",
-    "@angular/router": "^4.0.0",
+    "@angular/common": "^4.2.4",
+    "@angular/compiler": "^4.2.4",
+    "@angular/compiler-cli": "^4.2.4",
+    "@angular/core": "^4.2.4",
+    "@angular/forms": "^4.2.4",
+    "@angular/http": "^4.2.4",
+    "@angular/platform-browser": "^4.2.4",
+    "@angular/platform-browser-dynamic": "^4.2.4",
+    "@angular/router": "^4.2.4",
+    "@types/node": "^6.0.78",
     "core-js": "^2.4.1",
-    "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "protractor": "^5.1.2",
+    "rxjs": "^5.4.1",
+    "typescript": "^2.2.2",
+    "zone.js": "^0.8.12"
   },
   "devDependencies": {
     "@angular/cli": "1.0.0",

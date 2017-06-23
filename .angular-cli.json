@@ -18,7 +18,6 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "styles": ["modules/ng2-multi-selector/ng2-multi-selector.component.css"],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
