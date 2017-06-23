@@ -1,0 +1,30 @@
+{
+  "name": "ngx-multi-selector",
+  "version": "1.0.8",
+  "description": "A small plugin which generates multi-selector control, it supports web api loading.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "rxjs": "^5.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redplane/ng2-multi-selector.git"
+  },
+  "keywords": [
+    "ngx-multi-selector",
+    "multi-selector",
+    "multi-drop-down",
+    "drop-down",
+    "angular-4-drop-down",
+    "angular4-dropdown"
+  ],
+  "author": "Linh Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/redplane/ngx-multi-selector/issues"
+  },
+  "homepage": "https://github.com/redplane/ngx-multi-selector#readme"
+}

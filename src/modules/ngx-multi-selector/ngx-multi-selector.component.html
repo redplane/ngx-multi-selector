@@ -1,0 +1,69 @@
+<div class="input-group dropdown ngx-multi-selector">
+  <div class="dropdown-toggle"
+       [attr.data-toggle]="disabled ? '': 'dropdown'"
+       aria-haspopup="true"
+       aria-expanded="false"
+       [attr.disabled]="disabled">
+    <input class="form-control ngx-multi-selector-title-box"
+           readonly="readonly"
+           value="{{getChosenItemsTitle()}}"
+           placeholder="{{placeholderTitleDropDown}}"
+           [attr.disabled]="disabled">
+  </div>
+  <span class="input-group-addon dropdown-toggle"
+        [attr.data-toggle]="disabled ? '': 'dropdown'"
+        [attr.disabled]="disabled"
+        aria-haspopup="true"
+        aria-expanded="false">
+    <span class="caret"></span>
+  </span>
+  <span class="input-group-addon"
+        *ngIf="isClearButtonAvailable"
+        [attr.disabled]="disabled"
+        (click)="clearChosenItems()">
+    <span class="glyphicon glyphicon-remove"></span>
+  </span>
+  <ul class="dropdown-menu"
+      onclick="event.stopPropagation();">
+    <li>
+      <div class="col-lg-12">
+        <div class="form-group"
+             *ngIf="isSearchBoxAvailable">
+          <div class="input-group">
+            <input #txtSearch
+                   class="form-control"
+                   [(ngModel)]="keyword"
+                   placeholder="{{placeholderSearchDropDown}}">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-search"></span>
+              </span>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <ng-template ngFor
+                 let-item
+                 let-i="index"
+                 [ngForOf]="items">
+      <li [class.active]="getItemChosen(item)"
+          (click)="clickSelectItem(item)">
+        <a href="javascript:void(0);"
+           *ngIf="i < limitItemAmount">
+
+          <!--Item template-->
+          <ng-template [ngTemplateOutlet]="itemTemplate || defaultItemTemplate"
+                       [ngOutletContext]="{item:item, index:i}"></ng-template>
+        </a>
+      </li>
+    </ng-template>
+  </ul>
+</div>
+
+<!--Default template of selected items list-->
+<ng-template #defaultItemTemplate let-item="item"
+             let-i="index">
+  <span class="glyphicon glyphicon-check"
+        *ngIf="getItemChosen(item)"></span>
+  {{item[displayProperty]}}
+</ng-template>
