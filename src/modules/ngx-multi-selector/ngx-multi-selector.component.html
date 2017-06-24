@@ -1,4 +1,5 @@
-<div class="input-group dropdown ngx-multi-selector">
+<div #MultiSelectorDropDown
+     class="input-group ngx-multi-selector">
   <div class="dropdown-toggle"
        [attr.data-toggle]="disabled ? '': 'dropdown'"
        aria-haspopup="true"
@@ -24,7 +25,7 @@
     <span class="glyphicon glyphicon-remove"></span>
   </span>
   <ul class="dropdown-menu"
-      onclick="event.stopPropagation();">
+      (click)="$event.stopPropagation();">
     <li>
       <div class="col-lg-12">
         <div class="form-group"

@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {ICustomerService} from "../../interfaces/customer-service.interface";
 import {Response} from "@angular/http";
 import {Customer} from "../../models/customer";
@@ -7,6 +7,7 @@ import {IApiService} from "../../interfaces/api-service.interface";
 import {ParameterSearchResult} from "../../models/parameter-search-result";
 import {InputParameter} from "../../models/input-parameter";
 import {OutputParameter} from "../../models/output-parameter";
+import {NgxMultiSelectorComponent} from "../../modules/ngx-multi-selector/ngx-multi-selector.component";
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,10 @@ export class AppComponent implements OnInit {
 
   // Input & output parameters search result.
   private result: ParameterSearchResult;
+
+  // Inject multi-selector.
+  @ViewChild('multiselector')
+  private multiselector: NgxMultiSelectorComponent;
 
   //#endregion
 
@@ -78,6 +83,9 @@ export class AppComponent implements OnInit {
   public updateCustomers(items: Array<Customer>): void {
     // Update selected items list.
     this.items = items;
+
+    // Close immediately.
+    this.multiselector.closeDropDown();
   }
 
   public updateSecondItems(items: Array<Customer>): void{

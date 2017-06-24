@@ -121,23 +121,45 @@
         <hr/>
 
         <div class="panel-body">
-          <ngx-multi-selector #multiselector="ngx-multi-selector"
-                              [items]="customers"
-                              [display-property]="'ContactName'"
-                              [is-search-box-available]="false"
-                              [is-clear-button-available]="true"
-                              [placeholder-search-drop-down]="'Please select an item'"
-                              [separation-character]="' - '"
-                              [key]="'Id'"
-                              (search-items)="searchItem($event)"
-                              (update-items)="updateCustomers($event)">
-          </ngx-multi-selector>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="control-label">
+                Drop-down selector
+              </label>
+              <ngx-multi-selector #multiselector="ngx-multi-selector"
+                                  [items]="customers"
+                                  [display-property]="'ContactName'"
+                                  [is-search-box-available]="false"
+                                  [is-clear-button-available]="true"
+                                  [placeholder-search-drop-down]="'Please select an item'"
+                                  [separation-character]="' - '"
+                                  [key]="'Id'"
+                                  (search-items)="searchItem($event)"
+                                  (update-items)="updateCustomers($event)">
+              </ngx-multi-selector>
+            </div>
+          </div>
+          <div class="col-lg-6">
 
-          <ul>
-            <li *ngFor="let item of multiselector.getChosenItems()">
-              {{item.Id}} - {{item.ContactName}} - {{item.CompanyName}}
-            </li>
-          </ul>
+            <div class="form-group">
+              <label class="control-label">
+                List of selected items
+              </label>
+
+              <ul>
+                <li *ngFor="let item of multiselector.getChosenItems()">
+                  {{item.Id}} - {{item.ContactName}} - {{item.CompanyName}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <button class="btn btn-primary"
+                  (click)="multiselector.openDropDown()">
+            <span>Open</span>
+          </button>
         </div>
       </div>
 

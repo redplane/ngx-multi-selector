@@ -134,9 +134,50 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
     this.changeDetectorRef.detectChanges();
   }
 
-  // Get chosen item list.
+  /*
+  * Get chosen item list.
+  * */
   public getChosenItems(): Array<any> {
     return this.chosenItems;
+  }
+
+  /*
+  * Close drop-down menu.
+  * */
+  public closeDropDown(): void{
+    // Drop-down menu is invalid.
+    if (this.multiSelectorDropDown == null)
+      return;
+
+    // Find drop-down native element.
+    let nativeElement = this.multiSelectorDropDown.nativeElement;
+    if (nativeElement == null)
+      return;
+
+    // Remove class .open from classes list.
+    nativeElement.classList.remove('open');
+  }
+
+  /*
+  * Open drop-down menu.
+  * */
+  public openDropDown(): void{
+
+    // Component has been disabled.
+    if (this.disabled)
+      return;
+
+    // Drop-down menu is invalid.
+    if (this.multiSelectorDropDown == null)
+      return;
+
+    // Find drop-down native element.
+    let nativeElement = this.multiSelectorDropDown.nativeElement;
+    if (nativeElement == null)
+      return;
+
+    // Remove class .open from classes list.
+    nativeElement.classList.add('open');
   }
 
   //#endregion
@@ -209,6 +250,10 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
   // Custom item template.
   @Input('item-template')
   private itemTemplate: TemplateRef<any>;
+
+  // Injector of multi-selector drop-down menu.
+  @ViewChild('MultiSelectorDropDown')
+  private multiSelectorDropDown: ElementRef;
 
   //#endregion
 
