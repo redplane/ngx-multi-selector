@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
     this.items = items;
 
     // Close immediately.
-    this.multiselector.closeDropDown();
+    this.multiselector.close();
   }
 
   public updateSecondItems(items: Array<Customer>): void{

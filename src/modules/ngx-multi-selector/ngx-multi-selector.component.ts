@@ -144,7 +144,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
   /*
   * Close drop-down menu.
   * */
-  public closeDropDown(): void{
+  public close(): void{
     // Drop-down menu is invalid.
     if (this.multiSelectorDropDown == null)
       return;
@@ -161,7 +161,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
   /*
   * Open drop-down menu.
   * */
-  public openDropDown(): void{
+  public open(): void{
 
     // Component has been disabled.
     if (this.disabled)
@@ -177,7 +177,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
       return;
 
     // Remove class .open from classes list.
-    nativeElement.classList.add('open');
+    this.multiSelectorDropDown.nativeElement.classList.add('open');
   }
 
   //#endregion
