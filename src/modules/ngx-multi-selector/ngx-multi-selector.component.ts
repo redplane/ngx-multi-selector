@@ -97,10 +97,6 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
   * */
   public clearChosenItems(): void {
 
-    // Clear button is not supported.
-    if (!this.isClearButtonAvailable)
-      return;
-
     // Initiate new array.
     this.chosenItems = new Array<any>();
     this.changeDetectorRef.detectChanges();

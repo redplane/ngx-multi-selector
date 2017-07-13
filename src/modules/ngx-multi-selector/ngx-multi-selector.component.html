@@ -12,19 +12,19 @@
              placeholder="{{placeholderTitleDropDown}}"
              [attr.disabled]="disabled">
     </div>
+    <span class="input-group-addon"
+          *ngIf="isClearButtonAvailable"
+          [attr.disabled]="disabled"
+          (click)="clearChosenItems()">
+      <span class="glyphicon glyphicon-remove"></span>
+    </span>
     <span class="input-group-addon dropdown-toggle"
           [attr.data-toggle]="disabled ? '': 'dropdown'"
           [attr.disabled]="disabled"
           aria-haspopup="true"
           aria-expanded="false">
-    <span class="caret"></span>
-  </span>
-    <span class="input-group-addon"
-          *ngIf="isClearButtonAvailable"
-          [attr.disabled]="disabled"
-          (click)="clearChosenItems()">
-    <span class="glyphicon glyphicon-remove"></span>
-  </span>
+        <span class="caret"></span>
+    </span>
     <ul class="dropdown-menu"
         (click)="$event.stopPropagation();">
       <li>
@@ -62,7 +62,6 @@
     </ul>
   </div>
 </div>
-
 
 <!--Default template of selected items list-->
 <ng-template #defaultItemTemplate let-item="item"
