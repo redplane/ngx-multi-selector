@@ -9,7 +9,7 @@
       <input class="form-control ngx-multi-selector-title-box"
              readonly="readonly"
              value="{{getChosenItemsTitle()}}"
-             placeholder="{{placeholderTitleDropDown}}"
+             [placeholder]="placeholderTitleDropDown"
              [attr.disabled]="disabled">
     </div>
     <span class="input-group-addon"
@@ -35,7 +35,7 @@
               <input #txtSearch
                      class="form-control"
                      [(ngModel)]="keyword"
-                     placeholder="{{placeholderSearchDropDown}}">
+                     [placeholder]="placeholderSearchDropDown">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-search"></span>
               </span>
