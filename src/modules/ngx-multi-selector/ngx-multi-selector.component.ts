@@ -1,24 +1,31 @@
 import {
   AfterViewInit,
-  ApplicationRef,
   Component,
   ElementRef,
   EventEmitter,
   Input,
   Output,
   ViewChild,
-  ChangeDetectorRef, TemplateRef
+  ChangeDetectorRef, TemplateRef, forwardRef
 } from "@angular/core";
 import {Observable} from 'rxjs/Rx'
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
   selector: 'ngx-multi-selector',
   exportAs: 'ngx-multi-selector',
   templateUrl: 'ngx-multi-selector.component.html',
-  styleUrls: ['ngx-multi-selector.component.css']
+  styleUrls: ['ngx-multi-selector.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => NgxMultiSelectorComponent),
+      multi: true
+    }
+  ]
 })
 
-export class NgxMultiSelectorComponent implements AfterViewInit {
+export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAccessor {
 
   //#region Methods
 
@@ -99,10 +106,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
 
     // Initiate new array.
     this.chosenItems = new Array<any>();
-    this.changeDetectorRef.detectChanges();
-
-    // Fire the update event.
-    this.updateItemEventEmitter.emit(this.chosenItems);
+    this.onChangeCallback(this.chosenItems);
   }
 
   /*
@@ -119,22 +123,13 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
         return;
 
       this.chosenItems.push(item);
-      this.updateItemEventEmitter.emit(this.chosenItems);
-      this.changeDetectorRef.detectChanges();
+      // this.changeDetectorRef.detectChanges();
 
       return;
     }
     // Remove item from list.
     this.chosenItems.splice(itemIndex, 1);
-    this.updateItemEventEmitter.emit(this.chosenItems);
-    this.changeDetectorRef.detectChanges();
-  }
-
-  /*
-  * Get chosen item list.
-  * */
-  public getChosenItems(): Array<any> {
-    return this.chosenItems;
+    // this.changeDetectorRef.detectChanges();
   }
 
   /*
@@ -174,6 +169,28 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
 
     // Remove class .open from classes list.
     this.multiSelectorDropDown.nativeElement.classList.add('open');
+  }
+
+  /*
+  * Callback which is fired when component receives information from external source.
+  * */
+  public writeValue(obj: any): void {
+    if (this.chosenItems != obj)
+      this.chosenItems = obj;
+  }
+
+  /*
+  * Callback which is fired when on-change register has been initiated.
+  * */
+  public registerOnChange(fn: any): void {
+    this.onChangeCallback = fn;
+  }
+
+  /*
+  * Callback which is fired when on-touch register has been initiated.
+  * */
+  public registerOnTouched(fn: any): void {
+    this.onTouchedCallback = fn;
   }
 
   //#endregion
@@ -236,10 +253,6 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
   @Output('search-items')
   private search: EventEmitter<string>;
 
-  // This event emitter is emitted when item in list is selected.
-  @Output('update-items')
-  private updateItemEventEmitter: EventEmitter<Array<any>>;
-
   // Item which have been chosen.
   private chosenItems: Array<any>;
 
@@ -251,6 +264,16 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
   @ViewChild('MultiSelectorDropDown')
   private multiSelectorDropDown: ElementRef;
 
+  /*
+  * Callback which should be fired to raise on-touch event.
+  * */
+  private onTouchedCallback: () => void = () => {};
+
+  /*
+  * Callback which should be fired to raise on-change event.
+  * */
+  private onChangeCallback: (_: any) => void = () => {};
+
   //#endregion
 
   //#region Constructor
@@ -258,10 +281,9 @@ export class NgxMultiSelectorComponent implements AfterViewInit {
   /*
   * Initiate components with injectors (as available)
   * */
-  public constructor(private changeDetectorRef: ChangeDetectorRef) {
+  public constructor() {
     this.chosenItems = new Array<any>();
     this.search = new EventEmitter<string>();
-    this.updateItemEventEmitter = new EventEmitter<Array<any>>();
     this.items = new Array<any>();
 
     // By default, items amount is limited to 10.

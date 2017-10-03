@@ -33,6 +33,11 @@ export class AppComponent implements OnInit {
   @ViewChild('multiselector')
   private multiselector: NgxMultiSelectorComponent;
 
+  /*
+  * Collection of ngModels.
+  * */
+  private ngModels : any;
+
   //#endregion
 
   //#region Constructor
@@ -44,6 +49,11 @@ export class AppComponent implements OnInit {
     this.result = new ParameterSearchResult();
     this.result.inputs = new Array<InputParameter>();
     this.result.outputs = new Array<OutputParameter>();
+
+    this.ngModels = {
+      first: [],
+      second: []
+    }
   }
 
   //#endregion

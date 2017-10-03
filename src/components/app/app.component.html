@@ -134,6 +134,7 @@
                                   [placeholder-title-drop-down]="'Select a person'"
                                   [placeholder-search-drop-down]="'Please select an item'"
                                   [separation-character]="' - '"
+                                  [(ngModel)]="ngModels.first"
                                   [key]="'Id'"
                                   (search-items)="searchItem($event)"
                                   (update-items)="updateCustomers($event)">
@@ -148,7 +149,7 @@
               </label>
 
               <ul>
-                <li *ngFor="let item of multiselector.getChosenItems()">
+                <li *ngFor="let item of ngModels.first">
                   {{item.Id}} - {{item.ContactName}} - {{item.CompanyName}}
                 </li>
               </ul>
@@ -206,13 +207,14 @@
                               [placeholder-search-drop-down]="'Please select an item'"
                               [separation-character]="' - '"
                               [key]="'Id'"
+                              [(ngModel)]="ngModels.second"
                               [item-template]="customItemTemplate"
                               (search-items)="searchItem($event)"
                               (update-items)="updateSecondItems($event)">
           </ngx-multi-selector>
 
           <ul>
-            <li *ngFor="let item of secondMultiDropdown.getChosenItems()">
+            <li *ngFor="let item of ngModels.second">
               {{item.Id}} - {{item.ContactName}} - {{item.CompanyName}}
             </li>
           </ul>
