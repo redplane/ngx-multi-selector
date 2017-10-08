@@ -2,35 +2,34 @@
   <div #MultiSelectorDropDown
        class="input-group ngx-multi-selector">
     <div class="dropdown-toggle"
-         [attr.data-toggle]="disabled ? '': 'dropdown'"
+         [attr.data-toggle]="bDisabled ? '': 'dropdown'"
          aria-haspopup="true"
          aria-expanded="false"
-         [attr.disabled]="disabled">
+         [attr.disabled]="bDisabled">
       <input class="form-control ngx-multi-selector-title-box"
-             readonly="readonly"
-             value="{{getChosenItemsTitle()}}"
+             [attr.disabled]="bDisabled"
              [placeholder]="!placeholderTitleDropDown ? '' : placeholderTitleDropDown"
-             [attr.disabled]="disabled">
+             readonly="readonly"
+             [value]="(!chosenItems || chosenItems.length < 1) ? '' : getChosenItemsTitle()">
     </div>
     <span class="input-group-addon"
-          *ngIf="isClearButtonAvailable"
-          [attr.disabled]="disabled"
+          *ngIf="bClearButtonAvailable"
+          [attr.disabled]="bDisabled"
           (click)="clearChosenItems()">
       <span class="glyphicon glyphicon-remove"></span>
     </span>
     <span class="input-group-addon dropdown-toggle"
-          [attr.data-toggle]="disabled ? '': 'dropdown'"
-          [attr.disabled]="disabled"
+          [attr.data-toggle]="bDisabled ? '': 'dropdown'"
+          [attr.disabled]="bDisabled"
           aria-haspopup="true"
           aria-expanded="false">
         <span class="caret"></span>
     </span>
     <ul class="dropdown-menu"
         (click)="$event.stopPropagation();">
-      <li>
+      <li *ngIf="bSearchBoxAvailable">
         <div class="col-lg-12">
-          <div class="form-group"
-               *ngIf="isSearchBoxAvailable">
+          <div class="form-group">
             <div class="input-group">
               <input #txtSearch
                      class="form-control"

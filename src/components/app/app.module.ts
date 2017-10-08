@@ -7,15 +7,19 @@ import {AppComponent} from './app.component';
 import {CustomerServiceMock} from "../../services/mocks/customer-service.mock";
 import {ApiServiceMock} from "../../services/mocks/api-service.mock";
 import {NgxMultiSelectorModule} from 'modules/ngx-multi-selector/ngx-multi-selector.module';
+import {SharedModule} from "./shared/shared.module";
+import {AppRoutingModule} from "./app.routing";
 
 @NgModule({
   declarations: [
-    AppComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+
+    SharedModule,
+    AppRoutingModule,
 
     NgxMultiSelectorModule
   ],

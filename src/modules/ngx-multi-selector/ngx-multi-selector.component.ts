@@ -35,7 +35,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   public ngAfterViewInit(): void {
 
     // Only catch the key up event of search text box if it is supported.
-    if (this.isSearchBoxAvailable) {
+    if (this.bSearchBoxAvailable) {
       // Catch key up event of search box.
       Observable.fromEvent(this.txtSearch.nativeElement, 'keyup')
         .map((x: KeyboardEvent) => {
@@ -155,7 +155,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   public open(): void{
 
     // Component has been disabled.
-    if (this.disabled)
+    if (this.bDisabled)
       return;
 
     // Drop-down menu is invalid.
@@ -215,11 +215,11 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
 
   // Whether clear button should be available or not.
   @Input('is-clear-button-available')
-  private isClearButtonAvailable: boolean;
+  private bClearButtonAvailable: boolean;
 
   // Whether search box should be available or not.
   @Input('is-search-box-available')
-  private isSearchBoxAvailable: boolean;
+  private bSearchBoxAvailable: boolean;
 
   // How many items should be shown to be selected.
   @Input('limit-item-amount')
@@ -243,7 +243,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
 
   // Whether component is disabled or not.
   @Input("disabled")
-  private disabled: boolean;
+  private bDisabled: boolean;
 
   // How much time should component raise another one about its changes.
   @Input("interval")

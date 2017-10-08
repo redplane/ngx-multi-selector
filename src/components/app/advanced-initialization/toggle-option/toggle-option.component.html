@@ -1,0 +1,127 @@
+<div class="col-lg-6">
+  <!--Options table-->
+  <div class="row form-group">
+    <table class="table table-responsive table-condensed table-striped">
+      <tbody>
+
+      <!--is-clear-button-available-->
+      <tr>
+        <td>
+          <code>is-clear-button-available</code>
+        </td>
+        <td>
+          <select class="form-control"
+                  [(ngModel)]="options.bClearButtonAvailable">
+            <option *ngFor="let item of [{name: 'True', value: true}, {name: 'False', value: false}]"
+                    [ngValue]="item.value">{{item.name}}
+            </option>
+          </select>
+        </td>
+      </tr>
+
+      <!--is-search-box-available-->
+      <tr>
+        <td>
+          <code>is-search-box-available</code>
+        <td>
+          <select class="form-control"
+                  [(ngModel)]="options.bSearchBoxAvailable">
+            <option *ngFor="let item of [{name: 'True', value: true}, {name: 'False', value: false}]"
+                    [ngValue]="item.value">{{item.name}}
+            </option>
+          </select>
+        </td>
+      </tr>
+
+      <!--limit-item-amount-->
+      <tr>
+        <td>
+          <code>limit-item-amount</code>
+        </td>
+        <td>
+          <input class="form-control"
+                 type="number"
+                 step="1"
+                 [(ngModel)]="options.limitItemAmount"
+                 min="1"
+                 max="10">
+        </td>
+      </tr>
+
+      <!--placeholder-search-drop-down-->
+      <tr>
+        <td>
+          <code>placeholder-search-drop-down</code>
+        </td>
+        <td>
+          <input class="form-control"
+                 type="text"
+                 [(ngModel)]="options.placeholderSearchDropDown">
+        </td>
+      </tr>
+
+      <!--placeholder-title-drop-down-->
+      <tr>
+        <td>
+          <code>placeholder-title-drop-down</code>
+        </td>
+        <td>
+          <input class="form-control"
+                 type="text"
+                 [(ngModel)]="options.placeholderTitleDropDown">
+        </td>
+      </tr>
+
+      <!--separation-character-->
+      <tr>
+        <td>
+          <code>separation-character</code>
+        </td>
+        <td>
+          <input class="form-control"
+                 type="text"
+                 [(ngModel)]="options.separationCharacter">
+        </td>
+      </tr>
+
+      <!--disabled-->
+      <tr>
+        <td>
+          <code>disabled</code>
+        </td>
+        <td>
+          <select class="form-control"
+                  [(ngModel)]="options.bDisabled">
+            <option *ngFor="let item of [{name: 'True', value: true}, {name: 'False', value: false}]"
+                    [ngValue]="item.value">{{item.name}}
+            </option>
+          </select>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="col-lg-6">
+  <table class="table table-responsive table-condensed table-striped">
+    <tbody>
+    <tr>
+      <td>
+        <ngx-multi-selector [items]="customers"
+                            [(ngModel)]="chosenCustomers"
+                            [display-property]="'firstName'"
+                            [key]="'id'"
+                            [is-clear-button-available]="options.bClearButtonAvailable"
+                            [is-search-box-available]="options.bSearchBoxAvailable"
+                            [limit-item-amount]="options.limitItemAmount"
+                            [placeholder-search-drop-down]="options.placeholderSearchDropDown"
+                            [placeholder-title-drop-down]="options.placeholderTitleDropDown"
+                            [separation-character]="options.separationCharacter"
+                            [disabled]="options.bDisabled">
+        </ngx-multi-selector>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

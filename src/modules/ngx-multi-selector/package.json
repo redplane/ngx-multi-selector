@@ -1,6 +1,6 @@
 {
   "name": "ngx-multi-selector",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "A small plugin which generates multi-selector control, it supports web api loading.",
   "main": "index.js",
   "scripts": {
