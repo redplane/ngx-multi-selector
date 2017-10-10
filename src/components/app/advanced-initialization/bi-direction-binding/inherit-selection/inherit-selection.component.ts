@@ -7,7 +7,7 @@ import {Response} from '@angular/http';
   templateUrl: 'inherit-selection.component.html'
 })
 
-export class InheritSelectionComponent implements OnInit{
+export class InheritSelectionComponent implements OnInit {
 
   //#region Properties
 
@@ -38,7 +38,7 @@ export class InheritSelectionComponent implements OnInit{
   /*
   * Initiate component with injectors.
   * */
-  public constructor(@Inject('ICustomerService') public customerService: ICustomerService){
+  public constructor(@Inject('ICustomerService') public customerService: ICustomerService) {
     this.parent = [];
     this.child = [];
   }
@@ -51,7 +51,7 @@ export class InheritSelectionComponent implements OnInit{
   * Callback which should be raised when component has been initiated successfully.
   * */
   public ngOnInit(): void {
-    this.customerService.getCustomers().then((x: Response) =>{
+    this.customerService.getCustomers().then((x: Response) => {
       this.customers = x.json();
     });
   }
