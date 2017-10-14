@@ -1,4 +1,4 @@
-### ngx-multi-drop-down-selector
+### ngx-multi-selector
 
 Description:
 
@@ -6,24 +6,24 @@ Description:
  * More than one item can be selected.
  * Angular >= 4 support.
 
-Online demo can be found [here](http://ng2-multi-drop-down-selector.getforge.io/):
+Online demo can be found [here](http://ngx-multi-selector.bitballoon.com/):
 
 ```javascript
-<ngx-multi-selector #multiselector="ng2-multi-selector"
-					[items]="customers"
+<ngx-multi-selector [items]="customers"
+                    [(ngModel)]="chosenCustomers"
                     [display-property]="'ContactName'"
                     [is-search-box-available]="true"
                     [is-clear-button-available]="true"
                     [placeholder-search-drop-down]="'Please select an item'"
                     [separation-character]="' - '"
                     [key]="'Id'"
-                    (search-items)="searchItem($event)"
-                    (update-items)="updateCustomers($event)">
+                    (search-items)="searchItem($event)">
 </ngx-multi-selector>
 ```
 
 ### Options:
  * ```key``` (string): Property of object which determines whether item has been selected or not.
+ * ```ngModel``` (string): An array which is for storing chosen items.
  * ```display-property``` (string): Property which should be used for item display.
  * ```items``` (Array<any>): List of items which should be displayed inside drop-down menu.
  * ```is-clear-button-available``` (boolean): Whether clear button is available or not. This button is for cleaning chosen items list.
