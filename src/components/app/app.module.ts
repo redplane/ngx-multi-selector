@@ -6,7 +6,7 @@ import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {CustomerServiceMock} from "../../services/mocks/customer-service.mock";
 import {ApiServiceMock} from "../../services/mocks/api-service.mock";
-import {NgxMultiSelectorModule} from 'modules/ngx-multi-selector/ngx-multi-selector.module';
+import {NgxMultiSelectorModule} from '../../lib/public_api';
 import {SharedModule} from "./shared/shared.module";
 import {AppRoutingModule} from "./app.routing";
 

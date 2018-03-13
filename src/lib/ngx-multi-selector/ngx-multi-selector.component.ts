@@ -15,7 +15,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
   selector: 'ngx-multi-selector',
   exportAs: 'ngx-multi-selector',
   templateUrl: 'ngx-multi-selector.component.html',
-  styleUrls: ['ngx-multi-selector.component.css'],
+  styleUrls: ['ngx-multi-selector.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -278,12 +278,14 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   /*
   * Callback which should be fired to raise on-touch event.
   * */
-  private onTouchedCallback: () => void = () => {};
+  private onTouchedCallback: () => void = () => {
+  };
 
   /*
   * Callback which should be fired to raise on-change event.
   * */
-  private onChangeCallback: (_: any) => void = () => {};
+  private onChangeCallback: (_: any) => void = () => {
+  };
 
   //#endregion
 
