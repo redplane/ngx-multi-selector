@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "ngx-multi-selector.component.ts",
+    "ngx-multi-selector.module.ts"
+  ]
+}

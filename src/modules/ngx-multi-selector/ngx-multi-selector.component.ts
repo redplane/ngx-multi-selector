@@ -7,9 +7,9 @@ import {
   Output,
   ViewChild,
   ChangeDetectorRef, TemplateRef, forwardRef
-} from "@angular/core";
+} from '@angular/core';
 import {Observable} from 'rxjs/Rx'
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'ngx-multi-selector',
@@ -69,17 +69,19 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   * */
   public getChosenItemIndex(item: any): number {
     // Items list is empty.
-    if (this.chosenItems == null || this.chosenItems.length < 1)
+    if (this.chosenItems == null || this.chosenItems.length < 1) {
       return -1;
+    }
 
-    let results = this.chosenItems.filter((x: any) => {
+    const results = this.chosenItems.filter((x: any) => {
       return x[this.key] == item[this.key]
     });
 
-    if (results == null || results.length < 1)
+    if (results == null || results.length < 1) {
       return -1;
+    }
 
-    let result = results[0];
+    const result = results[0];
     return this.chosenItems.indexOf(result);
   }
 
@@ -87,13 +89,15 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   * Get title which is used for being displayed on search box.
   * */
   public getChosenItemsTitle(): string {
-    if (this.chosenItems == null || this.chosenItems.length < 1)
-      return "";
+    if (this.chosenItems == null || this.chosenItems.length < 1) {
+      return '';
+    }
 
     // Find separation character.
     let separation = this.szSeparationCharacter;
-    if (separation == null || separation.length < 1)
+    if (separation == null || separation.length < 1) {
       separation = ',';
+    }
     return this.chosenItems.map(x => {
       return x[this.displayProperty]
     }).join(separation).slice(0, 255);
@@ -114,13 +118,14 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   * */
   public clickSelectItem(item: any): void {
     // Find item index in array.
-    let itemIndex = this.getChosenItemIndex(item);
+    const itemIndex = this.getChosenItemIndex(item);
 
     // Item hasn't been chosen.
     if (itemIndex == null || itemIndex < 0) {
       // Maximum selected item exceeded.
-      if (this.limitItemSelection != null && this.chosenItems.length >= this.limitItemSelection)
+      if (this.limitItemSelection != null && this.chosenItems.length >= this.limitItemSelection) {
         return;
+      }
 
       this.chosenItems.push(item);
       // this.changeDetectorRef.detectChanges();
@@ -135,15 +140,17 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   /*
   * Close drop-down menu.
   * */
-  public close(): void{
+  public close(): void {
     // Drop-down menu is invalid.
-    if (this.multiSelectorDropDown == null)
+    if (this.multiSelectorDropDown == null) {
       return;
+    }
 
     // Find drop-down native element.
-    let nativeElement = this.multiSelectorDropDown.nativeElement;
-    if (nativeElement == null)
+    const nativeElement = this.multiSelectorDropDown.nativeElement;
+    if (nativeElement == null) {
       return;
+    }
 
     // Remove class .open from classes list.
     nativeElement.classList.remove('open');
@@ -152,20 +159,23 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   /*
   * Open drop-down menu.
   * */
-  public open(): void{
+  public open(): void {
 
     // Component has been disabled.
-    if (this.bDisabled)
+    if (this.bDisabled) {
       return;
+    }
 
     // Drop-down menu is invalid.
-    if (this.multiSelectorDropDown == null)
+    if (this.multiSelectorDropDown == null) {
       return;
+    }
 
     // Find drop-down native element.
-    let nativeElement = this.multiSelectorDropDown.nativeElement;
-    if (nativeElement == null)
+    const nativeElement = this.multiSelectorDropDown.nativeElement;
+    if (nativeElement == null) {
       return;
+    }
 
     // Remove class .open from classes list.
     this.multiSelectorDropDown.nativeElement.classList.add('open');
@@ -175,8 +185,9 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   * Callback which is fired when component receives information from external source.
   * */
   public writeValue(obj: any): void {
-    if (this.chosenItems != obj)
+    if (this.chosenItems != obj) {
       this.chosenItems = obj;
+    }
   }
 
   /*
@@ -198,11 +209,11 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   //#region Properties
 
   // Inject search box into component.
-  @ViewChild("txtSearch")
+  @ViewChild('txtSearch')
   private txtSearch: ElementRef;
 
   // Key which is for recognizing whether item is in the chosen list or not.
-  @Input("key")
+  @Input('key')
   private key: string;
 
   // Property in item which should be display on search box.
@@ -226,7 +237,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   private limitItemAmount: number;
 
   // How many items can be selected.
-  @Input("limit-item-selection")
+  @Input('limit-item-selection')
   private limitItemSelection: number;
 
   // Place holder of search box in drop-down list.
@@ -242,11 +253,11 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   private szSeparationCharacter: string;
 
   // Whether component is disabled or not.
-  @Input("disabled")
+  @Input('disabled')
   private bDisabled: boolean;
 
   // How much time should component raise another one about its changes.
-  @Input("interval")
+  @Input('interval')
   private interval: number;
 
   // Event emitter which is emitted when data should be submitted to server.
@@ -282,9 +293,9 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   * Initiate components with injectors (as available)
   * */
   public constructor() {
-    this.chosenItems = new Array<any>();
+    this.chosenItems = [];
     this.search = new EventEmitter<string>();
-    this.items = new Array<any>();
+    this.items = [];
 
     // By default, items amount is limited to 10.
     this.limitItemAmount = 10;
