@@ -1,0 +1,30 @@
+/*Multi selector drop-down menu.*/
+.ngx-multi-selector {
+  .dropdown-menu {
+    width: 100%;
+  }
+
+  input {
+    // Title box
+    &.ngx-multi-selector-title-box {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background-color: #ffffff !important;
+      cursor: default;
+
+    }
+  }
+
+  .input-group-addon.disabled,
+  .input-group-addon:disabled,
+  input.ngx-multi-selector-title-box.disabled,
+  input.ngx-multi-selector-title-box:disabled {
+    background-color: #eee !important;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+/*Multi selector title box.*/
+

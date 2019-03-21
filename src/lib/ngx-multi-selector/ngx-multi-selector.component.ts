@@ -6,16 +6,17 @@ import {
   Input,
   Output,
   ViewChild,
-  ChangeDetectorRef, TemplateRef, forwardRef
+  TemplateRef, forwardRef
 } from '@angular/core';
-import {Observable} from 'rxjs/Rx'
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {fromEvent} from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-multi-selector',
   exportAs: 'ngx-multi-selector',
   templateUrl: 'ngx-multi-selector.component.html',
-  styleUrls: ['ngx-multi-selector.css'],
+  styleUrls: ['ngx-multi-selector.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -37,15 +38,16 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
     // Only catch the key up event of search text box if it is supported.
     if (this.bSearchBoxAvailable) {
       // Catch key up event of search box.
-      Observable.fromEvent(this.txtSearch.nativeElement, 'keyup')
-        .map((x: KeyboardEvent) => {
-          return x.key;
-        })
-        .filter((x: string) => {
-          return (x != null && x.length > 0 && x != ' ');
-        })
-        .debounceTime(this.interval)
-        .distinctUntilChanged()
+      fromEvent(this.txtSearch.nativeElement, 'keyup')
+        .pipe(
+          map((keyboardEvent: KeyboardEvent) => {
+            return keyboardEvent.key;
+          }),
+          filter((keyword: string) => {
+            return (keyword != null && keyword.length > 0 && keyword != ' ');
+          }),
+          debounceTime(this.interval),
+          distinctUntilChanged())
         .subscribe(() => {
             // Clear previous search results.
             this.items = new Array<any>();
@@ -120,6 +122,10 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
     // Find item index in array.
     const itemIndex = this.getChosenItemIndex(item);
 
+    if (!this.chosenItems) {
+      this.chosenItems = [];
+    }
+
     // Item hasn't been chosen.
     if (itemIndex == null || itemIndex < 0) {
       // Maximum selected item exceeded.
@@ -128,13 +134,13 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
       }
 
       this.chosenItems.push(item);
-      // this.changeDetectorRef.detectChanges();
+      this.onChangeCallback(this.chosenItems);
 
       return;
     }
     // Remove item from list.
     this.chosenItems.splice(itemIndex, 1);
-    // this.changeDetectorRef.detectChanges();
+    this.onChangeCallback(this.chosenItems);
   }
 
   /*
@@ -209,6 +215,7 @@ export class NgxMultiSelectorComponent implements AfterViewInit, ControlValueAcc
   //#region Properties
 
   // Inject search box into component.
+  // @ts-ignore
   @ViewChild('txtSearch')
   private txtSearch: ElementRef;
 

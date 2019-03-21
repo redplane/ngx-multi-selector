@@ -1,14 +1,14 @@
-import {Component, Inject, OnInit} from "@angular/core";
+import {Component, Inject, OnInit} from '@angular/core';
 import {Response} from '@angular/http';
-import {ICustomerService} from "../../../../interfaces/customer-service.interface";
-import {SearchCustomerViewModel} from "../../../../view-models/search-customer.view-model";
+import {ICustomerService} from '../../../../interfaces/customer-service.interface';
+import {SearchCustomerViewModel} from '../../../../view-models/search-customer.view-model';
 
 @Component({
   selector: 'event-handling',
   templateUrl: 'event-handling.component.html'
 })
 
-export class EventHandlingComponent implements OnInit{
+export class EventHandlingComponent implements OnInit {
 
   //#region Properties
 
@@ -44,9 +44,10 @@ export class EventHandlingComponent implements OnInit{
   /*
   * Initiate component with injectors.
   * */
-  public constructor(@Inject('ICustomerService') public customerService: ICustomerService){
+  public constructor(@Inject('ICustomerService') public customerService: ICustomerService) {
     this.chosenCustomers = [];
   }
+
   //#endregion
 
   //#region Methods
@@ -66,13 +67,13 @@ export class EventHandlingComponent implements OnInit{
   * Callback which should be fired when ngx-multi-selector starts searching for input data.
   * This part is used for api querying or local data filter.
   * */
-  public search(keyword: string): void{
-    if (!keyword || keyword.length < 1){
+  public search(keyword: string): void {
+    if (!keyword || keyword.length < 1) {
       this.filteredCustomers = this.customers;
       return;
     }
 
-    this.filteredCustomers = this.customers.filter((x: any) =>{
+    this.filteredCustomers = this.customers.filter((x: any) => {
       let szUpperCasedKeyword = keyword.toUpperCase();
       return (x.firstName && x.firstName.toUpperCase().indexOf(szUpperCasedKeyword) !== -1);
     })
@@ -81,7 +82,7 @@ export class EventHandlingComponent implements OnInit{
   /*
   * Callback which is raised when multi selector starts requesting api service.
   * */
-  public apiSearch(keyword: string): void{
+  public apiSearch(keyword: string): void {
 
     let conditions = new SearchCustomerViewModel();
     if (keyword)
@@ -91,18 +92,20 @@ export class EventHandlingComponent implements OnInit{
       this.apiCustomers = x.json();
     })
   };
+
   /*
   * Delete a customer from chosen customers list.
   * */
-  public deleteCustomer(customer: any): void{
+  public deleteCustomer(customer: any): void {
+    debugger;
     if (!customer)
       return;
 
-    let iIndex = this.chosenCustomers.indexOf(customer);
+    let iIndex = this.apiChosenCustomers.indexOf(customer);
     if (iIndex === -1)
       return;
 
-    this.chosenCustomers.splice(iIndex, 1);
+    this.apiChosenCustomers.splice(iIndex, 1);
   };
 
   //#endregion
