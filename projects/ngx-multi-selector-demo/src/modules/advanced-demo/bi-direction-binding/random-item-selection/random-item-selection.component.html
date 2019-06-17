@@ -1,0 +1,29 @@
+<div class="row">
+  <div [class.col-md-6]="hasCustomerSelected"
+       [class.col-md-12]="!hasCustomerSelected">
+    <div class="form-group">
+      <ngx-multi-selector [items]="customers"
+                          [(ngModel)]="selectedCustomers"
+                          [display-property]="'firstName'"
+                          [key]="'id'"
+                          [separation-character]="' - '">
+      </ngx-multi-selector>
+    </div>
+  </div>
+
+  <div [class.col-md-6]="hasCustomerSelected"
+       [class.col-md-12]="!hasCustomerSelected" *ngIf="hasCustomerSelected">
+    <div class="form-group">
+      <label>Selected customers</label>
+      <br/>
+      <code>
+        {{selectedCustomers | json}}
+      </code>
+    </div>
+  </div>
+</div>
+
+
+<div class="form-group">
+  <button class="btn btn-flat btn-block" (click)="clickSelectRandomCustomer()">Generate</button>
+</div>

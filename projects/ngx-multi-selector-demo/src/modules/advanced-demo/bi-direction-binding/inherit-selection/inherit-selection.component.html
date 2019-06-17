@@ -1,0 +1,71 @@
+<label>Parent</label>
+<div class="form-group">
+  <ngx-multi-selector [items]="originalItems"
+                      [(ngModel)]="selectedParentItems"
+                      [display-property]="'firstName'"
+                      [key]="'id'"
+                      [placeholder-title-drop-down]="loadParentItemsPlaceholder()"
+                      [separation-character]="' - '"
+                      [disabled]="!hasCustomersListLoaded">
+  </ngx-multi-selector>
+</div>
+
+<label>Child</label>
+<div class="form-group">
+  <ngx-multi-selector [items]="selectedParentItems"
+                      [(ngModel)]="selectedChildItems"
+                      [display-property]="'firstName'"
+                      [placeholder-title-drop-down]="loadChildItemsPlaceholder()"
+                      [key]="'id'"
+                      [separation-character]="' - '"
+                      [disabled]="!hasCustomersListLoaded">
+  </ngx-multi-selector>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <table class="table table-responsive table-condensed table-striped">
+      <thead>
+      <tr>
+        <th colspan="3" class="text-center">Parent</th>
+      </tr>
+      <tr>
+        <th>Id</th>
+        <th>First name</th>
+        <th>Last name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let customer of selectedParentItems">
+        <td>{{customer.id}}</td>
+        <td>{{customer.firstName}}</td>
+        <td>{{customer.lastName}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-lg-6">
+    <table class="table table-responsive table-condensed table-striped">
+      <thead>
+      <tr>
+        <th colspan="3" class="text-center">
+          Child
+        </th>
+      </tr>
+      <tr>
+        <th>Id</th>
+        <th>First name</th>
+        <th>Last name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let customer of selectedChildItems">
+        <td>{{customer.id}}</td>
+        <td>{{customer.firstName}}</td>
+        <td>{{customer.lastName}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

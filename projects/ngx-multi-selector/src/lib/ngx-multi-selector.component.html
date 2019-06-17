@@ -1,0 +1,78 @@
+<div class="dropdown">
+
+  <!--Text input-->
+  <div #multiSelectorDropdownMenu
+       class="input-group ngx-multi-selector">
+    <div class="dropdown-toggle"
+         [attr.data-toggle]="disabled ? '': 'dropdown'"
+         aria-haspopup="true"
+         aria-expanded="false"
+         [attr.disabled]="disabled">
+      <input class="form-control ngx-multi-selector-title-box"
+             [class.disabled]="disabled"
+             [placeholder]="!placeholderTitleDropDown ? '' : placeholderTitleDropDown"
+             readonly="readonly"
+             [value]="loadSelectedItemsTitle()">
+    </div>
+    <span class="input-group-addon"
+          *ngIf="shouldClearButtonAvailable"
+          [class.disabled]="disabled"
+          (click)="deleteSelectedItems()">
+      <span class="glyphicon glyphicon-remove"></span>
+    </span>
+
+    <!--Dropdown-->
+    <span class="input-group-addon dropdown-toggle"
+          [attr.data-toggle]="disabled ? '': 'dropdown'"
+          [class.disabled]="disabled"
+          aria-haspopup="true"
+          aria-expanded="false">
+        <span class="caret"></span>
+    </span>
+
+    <!--Dropdown menu-->
+    <ul class="dropdown-menu"
+        (click)="$event.stopPropagation();">
+      <li *ngIf="shouldSearchBoxAvailable">
+        <div class="col-lg-12">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control"
+                     [(ngModel)]="keyword"
+                     [placeholder]="!placeholderSearchDropDown ? '' : placeholderSearchDropDown">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-search"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <ng-template ngFor
+                   let-item
+                   let-i="index"
+                   [ngForOf]="items">
+        <li [class.active]="hasItemSelected(item)"
+            (click)="clickSelectItem(item)">
+          <a href="javascript:void(0);"
+             *ngIf="maximumContextItem < 1 || (maximumContextItem > 0 && i < maximumContextItem)">
+
+            <!--Item template-->
+            <ng-template [ngTemplateOutlet]="itemTemplate || defaultItemTemplate"
+                         [ngTemplateOutletContext]="{item:item, index:i, selected: hasItemSelected(item)}"></ng-template>
+          </a>
+        </li>
+      </ng-template>
+    </ul>
+  </div>
+</div>
+
+<!--Default item template-->
+<ng-template #defaultItemTemplate
+             let-item="item"
+             let-i="index"
+             let-selected="selected">
+  <span class="glyphicon glyphicon-check"
+        *ngIf="selected"></span>
+  {{loadItemDisplay(item)}}
+</ng-template>

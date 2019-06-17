@@ -1,0 +1,22 @@
+{
+  "name": "ngrx-message-bus",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "rxjs": "^6.3.0"
+  },
+  "author": {
+    "name": "Nguyen Duy Linh",
+    "email": "redplane_dt@yahoo.com.vn",
+    "url": "https://nguyen-duy-linh.netlify.com"
+  },
+  "bugs": "https://github.com/redplane/rx-message-bus/issues",
+  "repository": "https://github.com/redplane/rx-message-bus",
+  "keywords": [
+    "ngrx-message-bus",
+    "rx-message-bus",
+    "ngrx",
+    "message-bus",
+    "shared-service",
+    "shared service"
+  ]
+}
