@@ -31,16 +31,6 @@ export class EventHandlingComponent implements OnInit {
   * */
   protected localSelectedValues: Array<number>;
 
-  /*
-  * List of chosen customers.
-  * */
-  private apiChosenCustomers: Array<Customer>;
-
-  /*
-  * List of customers which should be displayed inside multi selector.
-  * */
-  protected filteredCustomers: Array<Customer>;
-
   //#endregion
 
   //#region Constructor
@@ -65,22 +55,6 @@ export class EventHandlingComponent implements OnInit {
 
         this.customers = customers;
       });
-  };
-
-  /*
-  * Callback which should be fired when ngx-multi-selector starts searching for input data.
-  * This part is used for api querying or local data filter.
-  * */
-  public search(keyword: string): void {
-    if (!keyword || keyword.length < 1) {
-      this.filteredCustomers = this.customers;
-      return;
-    }
-
-    this.filteredCustomers = this.customers.filter((x: any) => {
-      let szUpperCasedKeyword = keyword.toUpperCase();
-      return (x.firstName && x.firstName.toUpperCase().indexOf(szUpperCasedKeyword) !== -1);
-    })
   };
 
   /*

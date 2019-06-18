@@ -2,13 +2,10 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AdvancedDemoComponent} from "./advanced-demo.component";
 import {CustomerServiceMock} from "../../services/mocks/customer-service.mock";
-import {DataSourceComponent} from "./data-source/data-source.component";
-import {ToggleOptionComponent} from "./toggle-option/toggle-option.component";
 import {BiDirectionBindingComponent} from "./bi-direction-binding/bi-direction-binding.component";
 import {RemoveBoundItemComponent} from "./bi-direction-binding/remove-bound-item/remove-bound-item.component";
 import {RandomItemSelectionComponent} from "./bi-direction-binding/random-item-selection/random-item-selection.component";
 import {InheritSelectionComponent} from "./bi-direction-binding/inherit-selection/inherit-selection.component";
-import {EventHandlingComponent} from "./event-handling/event-handling.component";
 import {AdvancedInitializationRoutingModule} from "./advanced-demo.route";
 import {SharedModule} from "../shared/shared.module";
 import {CommonModule} from "@angular/common";
@@ -17,13 +14,10 @@ import {NgxMultiSelectorModule} from '../../../../ngx-multi-selector/src/lib/ngx
 
 @NgModule({
   declarations: [
-    DataSourceComponent,
-    ToggleOptionComponent,
     BiDirectionBindingComponent,
     RemoveBoundItemComponent,
     RandomItemSelectionComponent,
     InheritSelectionComponent,
-    EventHandlingComponent,
     AdvancedDemoComponent
   ],
   imports: [

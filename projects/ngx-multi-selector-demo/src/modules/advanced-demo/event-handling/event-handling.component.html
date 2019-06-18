@@ -40,17 +40,19 @@
   <legend>Api data filtering</legend>
   <div class="col-lg-6">
     <label>Muti selector (API)</label>
-    <ngx-multi-selector [is-search-box-available]="true"
-                        [(ngModel)]="selectedApiCustomers"
-                        [display-property]="'firstName'"
-                        [separation-character]="' - '"
-                        [load-available-items-handler]="loadAvailableItemsAsync"
-                        [placeholder-title-drop-down]="'Please type a name of item in drop-down list.'">
-    </ngx-multi-selector>
+    <div class="form-group">
+      <ngx-multi-selector [is-search-box-available]="true"
+                          [(ngModel)]="selectedApiCustomers"
+                          [key-property]="'id'"
+                          [display-property]="'firstName'"
+                          [separation-character]="' - '"
+                          [load-available-items-handler]="loadAvailableItemsAsync"
+                          [placeholder-title-drop-down]="'Please type a name of item in drop-down list.'">
+      </ngx-multi-selector>
+    </div>
   </div>
 
   <div class="col-lg-6">
-    <div class="col-lg-6">
       <label>Selected items</label>
       <table class="table table-responsive table-bordered table-condensed">
         <thead>
@@ -62,7 +64,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let customer of apiChosenCustomers">
+        <tr *ngFor="let customer of selectedApiCustomers">
           <td class="text-center">{{customer.id}}</td>
           <td class="text-center">{{customer.firstName}}</td>
           <td class="text-center">{{customer.lastName}}</td>
@@ -76,7 +78,6 @@
         </tbody>
       </table>
     </div>
-  </div>
 
 </fieldset>
 

@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AdvancedDemoComponent} from "./advanced-demo.component";
-import {DataSourceComponent} from "./data-source/data-source.component";
-import {ToggleOptionComponent} from "./toggle-option/toggle-option.component";
 import {BiDirectionBindingComponent} from "./bi-direction-binding/bi-direction-binding.component";
 import {RemoveBoundItemComponent} from "./bi-direction-binding/remove-bound-item/remove-bound-item.component";
 import {InheritSelectionComponent} from "./bi-direction-binding/inherit-selection/inherit-selection.component";
 import {RandomItemSelectionComponent} from "./bi-direction-binding/random-item-selection/random-item-selection.component";
-import {EventHandlingComponent} from "./event-handling/event-handling.component";
 
 // Route configuration.
 const routes: Routes = [
@@ -17,11 +14,11 @@ const routes: Routes = [
     children:[
       {
         path: 'data-source',
-        component: DataSourceComponent
+        loadChildren: './data-source/data-source.module#DataSourceModule'
       },
       {
         path: 'toggle-option',
-        component: ToggleOptionComponent
+        loadChildren: './toggle-option/toggle-option.module#ToggleOptionModule'
       },
       {
         path: 'bi-directional-binding',
@@ -40,15 +37,18 @@ const routes: Routes = [
             component: InheritSelectionComponent
           },
           {
-            path: '',
-            pathMatch: 'full',
-            redirectTo: '/advanced-demo/bi-directional-binding/remove-bound-items'
+            path: '**',
+            redirectTo: 'remove-bound-items'
           }
         ]
       },
       {
         path: 'event-handling',
-        component: EventHandlingComponent
+        loadChildren: './event-handling/event-handling.module#EventHandlingModule'
+      },
+      {
+        path: 'custom-item-template',
+        loadChildren: './custom-item-template/custom-item-template.module#CustomItemTemplateModule'
       },
       {
         path: '',

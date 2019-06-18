@@ -68,6 +68,21 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   private _maximumSelectableItems = 0;
 
   /*
+  * Property which is for determining whether item is selected or not.
+  * */
+  private _key: string;
+
+  /*
+  * Property which is for determining what property should be used for display.
+  * */
+  private _displayProperty: string;
+
+  /*
+  * Property which is for determining what property should be used as selected value.
+  * */
+  private _valueProperty: string;
+
+  /*
   * Handle for loading available items asynchronously.
   * */
   @Input('load-available-items-handler')
@@ -88,18 +103,6 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   * */
   @ViewChild('multiSelectorDropdownMenu', {static: false})
   private multiSelectorDropDown: ElementRef;
-
-  /*
-  * Key which is for recognizing whether item is in the chosen list or not.
-  * */
-  @Input('key')
-  protected key: string;
-
-  /*
-  * Property in item which should be display on search box.
-  * */
-  @Input('display-property')
-  protected displayProperty: string;
 
   /*
   * Whether clear button should be available or not.
@@ -189,14 +192,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
       return;
     }
 
-    this._separationCharacter = value[0];
-  }
-
-  /*
-  * Character which is used for dividing searched items.
-  * */
-  public get separationCharacter(): string {
-    return this._separationCharacter;
+    this._separationCharacter = value;
   }
 
   /*
@@ -298,6 +294,43 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
     this._maximumSelectableItems = value;
   }
 
+  /*
+  * @deprecated
+  * Please consider using key-property instead.
+  * Key which is for recognizing whether item is in the chosen list or not.
+  * */
+  @Input('key')
+  protected set key(value: string) {
+    this._key = value;
+  }
+
+  /*
+  * Please consider using key-property instead.
+  * Key which is for recognizing whether item is in the chosen list or not.
+  * */
+  @Input('key-property')
+  protected set keyProperty(value: string) {
+    this._key = value;
+  }
+  /*
+  * Which property should be used as display.
+  * Null is about using object as display.
+  * */
+  @Input('display-property')
+  protected set displayProperty(value: string) {
+    this._displayProperty = value;
+  }
+
+  /*
+  * Which property should be used as selected value.
+  * Null is about using object as selected value.
+  * */
+  @Input('value-property')
+  protected set valueProperty(value: string) {
+    this._valueProperty = value;
+  }
+
+
   //#endregion
 
   //#region Constructor
@@ -329,8 +362,8 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
         })
       )
       .subscribe(availableItems => {
-        this._availableItems = availableItems;
-      }, error => console.log(error));
+        this._availableItems = [...availableItems];
+      });
   }
 
   //#endregion
@@ -355,12 +388,14 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   * */
   protected loadSelectedItemIndex(item: any): number {
     // Items list is empty.
-    if (this.selectedItems == null || this.selectedItems.length < 1) {
+    if (this._selectedItems == null || this._selectedItems.length < 1) {
       return -1;
     }
 
     // Get item index.
-    return this.selectedItems.indexOf(item);
+    const itemIndex = this._selectedItems.findIndex(selectedItem => this.loadItemUniqueValue(selectedItem) === this.loadItemUniqueValue(item));
+    console.log(itemIndex);
+    return itemIndex;
   }
 
   /*
@@ -372,24 +407,13 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
     }
 
     // Find separation character.
-    let separationCharacter = this.separationCharacter;
+    let separationCharacter = this._separationCharacter;
     if (!separationCharacter) {
       separationCharacter = ',';
     }
 
-    // Get the property which is for displaying purpose.
-    const displayProperty = this.displayProperty;
-
     return this.selectedItems
-      .map(selectedItem => {
-
-        // There is no display property.
-        if (!displayProperty || !displayProperty.length) {
-          return selectedItem;
-        }
-
-        return selectedItem[displayProperty]
-      })
+      .map(selectedItem => this.loadItemDisplay(selectedItem))
       .join(separationCharacter)
       .slice(0, 255);
   }
@@ -450,7 +474,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
     }
 
     // Get item in the selected value.
-    const itemIndex = selectedItems.indexOf(item);
+    const itemIndex = this.loadSelectedItemIndex(item);
 
     // Item hasn't been chosen.
     if (itemIndex == null || itemIndex < 0) {
@@ -527,7 +551,6 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   * Callback which is fired when component receives information from external source.
   * */
   public writeValue(selectedValues: any[]): void {
-
     // No value has been selected.
     if (!selectedValues || !selectedValues.length) {
       this.selectedItems = null;
@@ -613,7 +636,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   protected loadItemDisplay(item: any): string {
 
     // Get the display property.
-    const displayProperty = this.displayProperty;
+    const displayProperty = this._displayProperty;
     if (!displayProperty || !displayProperty.length) {
       return item;
     }
@@ -627,8 +650,22 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   protected loadItemValue(item: any): string {
 
     // Get defined key.
-    const key = this.key;
-    if (!key || !key.length) {
+    const valueProperty = this._valueProperty;
+    if (!valueProperty || !valueProperty.length) {
+      return item;
+    }
+
+    return item[valueProperty];
+  }
+
+  /*
+  * Base on key to get item unique value.
+  * */
+  protected loadItemUniqueValue(item: any): any {
+
+    // Get key.
+    const key = this._key;
+    if (!key || key.length < 1) {
       return item;
     }
 
