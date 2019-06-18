@@ -8,6 +8,7 @@
                         [(ngModel)]="localSelectedValues"
                         [display-property]="'firstName'"
                         [key]="'id'"
+                        [value-property]="'id'"
                         [separation-character]="' - '"
                         [placeholder-title-drop-down]="'Data will be filtered by search box.'">
     </ngx-multi-selector>
@@ -60,7 +61,6 @@
           <th class="text-center">Id</th>
           <th class="text-center">First name</th>
           <th class="text-center">Last name</th>
-          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -68,12 +68,6 @@
           <td class="text-center">{{customer.id}}</td>
           <td class="text-center">{{customer.firstName}}</td>
           <td class="text-center">{{customer.lastName}}</td>
-          <td>
-            <button class="btn btn-flat btn-danger"
-                    (click)="deleteCustomer(customer)">
-              <span class="glyphicon glyphicon-trash"></span>
-            </button>
-          </td>
         </tr>
         </tbody>
       </table>

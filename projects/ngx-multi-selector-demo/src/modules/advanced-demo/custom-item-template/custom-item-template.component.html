@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<fieldset>
+  <legend>Item template</legend>
+  <div class="col-lg-12">
+    <label>Multi selector</label>
+    <div class="form-group">
+      <ngx-multi-selector #customerSelector="ngx-multi-selector"
+                          [items]="customers"
+                          [is-search-box-available]="true"
+                          [(ngModel)]="selectedCustomers"
+                          [display-property]="'firstName'"
+                          [key]="'id'"
+                          [separation-character]="' - '"
+                          [item-template]="itemTemplate"
+                          [placeholder-title-drop-down]="placeholderTitle">
+      </ngx-multi-selector>
+    </div>
+  </div>
 
-</body>
-</html>
+  <div class="col-lg-12">
+    <table class="table table-responsive table-bordered table-condensed">
+      <thead>
+      <tr>
+        <th class="text-center">Id</th>
+        <th class="text-center">First name</th>
+        <th class="text-center">Last name</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let customer of selectedCustomers">
+        <td class="text-center">{{customer.id}}</td>
+        <td class="text-center">{{customer.firstName}}</td>
+        <td class="text-center">{{customer.lastName}}</td>
+        <td>
+          <button class="btn btn-flat btn-danger"
+                  (click)="customerSelector.deleteSelectedValue(customer)">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-lg-12">
+    <code [innerText]="htmlSourceCode"></code>
+  </div>
+</fieldset>
+
+<ng-template #itemTemplate
+             let-customer="item"
+             let-instance="instance"
+             let-selected="selected">
+  <li (click)="instance.clickSelectItem(customer)"
+      [class.active]="selected">
+    <a href="javascript:void(0);">
+      <img class="img-thumbnail" [src]="'https://i.imgur.com/wgT1ypP.png'">
+      <span>&nbsp;</span>
+      <span>{{customer.firstName}} {{customer.lastName}}</span>
+    </a>
+  </li>
+</ng-template>

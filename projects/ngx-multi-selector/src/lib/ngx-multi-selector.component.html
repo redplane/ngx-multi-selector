@@ -52,16 +52,14 @@
                    let-item
                    let-i="index"
                    [ngForOf]="items">
-        <li [class.active]="hasItemSelected(item)"
-            (click)="clickSelectItem(item)">
-          <a href="javascript:void(0);"
-             *ngIf="maximumContextItem < 1 || (maximumContextItem > 0 && i < maximumContextItem)">
 
-            <!--Item template-->
-            <ng-template [ngTemplateOutlet]="itemTemplate || defaultItemTemplate"
-                         [ngTemplateOutletContext]="{item:item, index:i, selected: hasItemSelected(item)}"></ng-template>
-          </a>
-        </li>
+        <ng-container *ngIf="maximumContextItem < 1 || (maximumContextItem > 0 && i < maximumContextItem)">
+          <!--Item template-->
+          <ng-template [ngTemplateOutlet]="itemTemplate || defaultItemTemplate"
+                       [ngTemplateOutletContext]="{item:item, index:i, selected: hasItemSelected(item), instance: this}">
+          </ng-template>
+        </ng-container>
+
       </ng-template>
     </ul>
   </div>
@@ -71,8 +69,15 @@
 <ng-template #defaultItemTemplate
              let-item="item"
              let-i="index"
-             let-selected="selected">
-  <span class="glyphicon glyphicon-check"
-        *ngIf="selected"></span>
-  {{loadItemDisplay(item)}}
+             let-selected="selected"
+             let-instance="instance">
+
+  <li [class.active]="hasItemSelected(item)"
+      (click)="instance.clickSelectItem(item)">
+    <a href="javascript:void(0);">
+      <span class="glyphicon glyphicon-check"
+            *ngIf="selected"></span>
+      {{loadItemDisplay(item)}}
+    </a>
+  </li>
 </ng-template>

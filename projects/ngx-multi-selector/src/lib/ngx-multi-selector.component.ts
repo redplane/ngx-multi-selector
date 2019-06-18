@@ -312,6 +312,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   protected set keyProperty(value: string) {
     this._key = value;
   }
+
   /*
   * Which property should be used as display.
   * Null is about using object as display.
@@ -394,7 +395,6 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
 
     // Get item index.
     const itemIndex = this._selectedItems.findIndex(selectedItem => this.loadItemUniqueValue(selectedItem) === this.loadItemUniqueValue(item));
-    console.log(itemIndex);
     return itemIndex;
   }
 
@@ -608,19 +608,13 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
               .filter(item => {
 
                 // Get the display property.
-                const displayProperty = this.displayProperty;
-                if (displayProperty && displayProperty.length > 0) {
-                  const itemProperty = item[displayProperty];
-                  if (!itemProperty) {
-                    return false;
-                  }
+                const itemDisplay = this.loadItemDisplay(item);
 
-                  if (!upperCasedKeyword) {
-                    return items;
-                  }
-
-                  return itemProperty.toString().toUpperCase().indexOf(upperCasedKeyword) !== -1;
+                if (!upperCasedKeyword) {
+                  return items;
                 }
+
+                return itemDisplay.toString().toUpperCase().indexOf(upperCasedKeyword) !== -1;
               })
           })
         );
@@ -638,7 +632,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
     // Get the display property.
     const displayProperty = this._displayProperty;
     if (!displayProperty || !displayProperty.length) {
-      return item;
+      return item.toString();
     }
 
     return item[displayProperty];
@@ -663,6 +657,10 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   * */
   protected loadItemUniqueValue(item: any): any {
 
+    if (!item) {
+      return item;
+    }
+    
     // Get key.
     const key = this._key;
     if (!key || key.length < 1) {
