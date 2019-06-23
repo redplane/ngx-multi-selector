@@ -14,22 +14,22 @@ export class InheritSelectionComponent implements OnInit {
   /*
   * List of customers to be selected.
   * */
-  private _originalItems: Array<Customer>;
+  public _originalItems: Array<Customer>;
 
   /*
   * List of selected parent items.
   * */
-  private _selectedParentItems: Array<Customer>;
+  public _selectedParentItems: Array<Customer>;
 
   /*
   * List of items in child selector.
   * */
-  private _selectChildItems: Array<Customer>;
+  public _selectChildItems: Array<Customer>;
 
   /*
   * Whether customers list has been loaded or not.
   * */
-  protected hasCustomersListLoaded = false;
+  public hasCustomersListLoaded = false;
 
   //#endregion
 
@@ -58,14 +58,14 @@ export class InheritSelectionComponent implements OnInit {
   /*
   * Get the parent's selected items.
   * */
-  protected get selectedParentItems(): Array<Customer> {
+  public get selectedParentItems(): Array<Customer> {
     return this._selectedParentItems;
   }
 
   /*
   * Set the parent selected items.
   * */
-  protected set selectedParentItems(values: Customer[]) {
+  public set selectedParentItems(values: Customer[]) {
     if (!values || !values.length) {
       this._selectedParentItems = [];
       return;
@@ -77,14 +77,14 @@ export class InheritSelectionComponent implements OnInit {
   /*
   * Get child's selected items.
   * */
-  protected get selectedChildItems(): Customer[] {
+  public get selectedChildItems(): Customer[] {
     return this._selectChildItems;
   }
 
   /*
   * Set child's selected items.
   * */
-  protected set selectedChildItems(values: Customer[]) {
+  public set selectedChildItems(values: Customer[]) {
     if (!this._selectChildItems) {
       this._selectChildItems = [];
       return;
@@ -122,7 +122,7 @@ export class InheritSelectionComponent implements OnInit {
   /*
   * Load parent items placeholder.
   * */
-  protected loadParentItemsPlaceholder(): string {
+  public loadParentItemsPlaceholder(): string {
 
     if (!this.hasCustomersListLoaded) {
       return 'Loading customers...';
@@ -134,7 +134,7 @@ export class InheritSelectionComponent implements OnInit {
   /*
   * Load child items placeholder.
   * */
-  protected loadChildItemsPlaceholder(): string {
+  public loadChildItemsPlaceholder(): string {
     if (!this.hasCustomersListLoaded) {
       return 'Loading customers...';
     }

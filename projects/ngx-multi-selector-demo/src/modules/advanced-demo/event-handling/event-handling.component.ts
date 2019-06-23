@@ -19,17 +19,17 @@ export class EventHandlingComponent implements OnInit {
   /*
   * Original list of customers to be selected.
   * */
-  private customers: Array<Customer>;
+  public customers: Array<Customer>;
 
   /*
   * List of customers which is obtained from API service.
   * */
-  protected selectedApiCustomers: Array<Customer>;
+  public selectedApiCustomers: Array<Customer>;
 
   /*
   * List of chosen customers.
   * */
-  protected localSelectedValues: Array<number>;
+  public localSelectedValues: Array<number>;
 
   //#endregion
 

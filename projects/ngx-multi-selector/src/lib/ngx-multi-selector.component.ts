@@ -1,16 +1,14 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   Input,
-  Output,
   ViewChild,
   TemplateRef, forwardRef, OnDestroy, OnInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {AsyncSubject, BehaviorSubject, Observable, of, Subject, Subscription} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, map, switchMap} from 'rxjs/operators'
+import {BehaviorSubject, EMPTY, Observable, of, ReplaySubject, Subject, Subscription, timer} from 'rxjs';
+import {debounce, distinctUntilChanged, map, switchMap} from 'rxjs/operators'
+import {IUpdateMultiSelectorCommand} from './update-multi-selector-command.interface';
 
 @Component({
   selector: 'ngx-multi-selector',
@@ -29,6 +27,11 @@ import {debounceTime, distinctUntilChanged, filter, map, switchMap} from 'rxjs/o
 export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   //#region Properties
+
+  /*
+  * Delay time between 2 item search requests.
+  * */
+  private readonly _defaultItemsInterval = 150;
 
   /*
   * List of items which have been selected.
@@ -91,7 +94,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   /*
   * Emit a keyword for updating available items.
   * */
-  private _updateAvailableItemsSubject: Subject<string>;
+  private _updateAvailableItemsSubject: Subject<IUpdateMultiSelectorCommand>;
 
   /*
   * Subscription about control update management.
@@ -102,44 +105,37 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   * Injector of multi-selector drop-down menu.
   * */
   @ViewChild('multiSelectorDropdownMenu', {static: false})
-  private multiSelectorDropDown: ElementRef;
+  public multiSelectorDropDown: ElementRef;
 
   /*
   * Whether clear button should be available or not.
   * */
   @Input('is-clear-button-available')
-  private shouldClearButtonAvailable: boolean;
+  public shouldClearButtonAvailable: boolean;
 
   /*
   * Whether search box should be available or not.
   * */
   @Input('is-search-box-available')
-  private shouldSearchBoxAvailable: boolean;
+  public shouldSearchBoxAvailable: boolean;
 
   /*
   * Place holder of search box in drop-down list.
   * */
   @Input('placeholder-search-drop-down')
-  private placeholderSearchDropDown: string;
+  public placeholderSearchDropDown: string;
 
   /*
   * Place holder of title.
   * */
   @Input('placeholder-title-drop-down')
-  private placeholderTitleDropDown: string;
+  public placeholderTitleDropDown: string;
 
   /*
   *  Whether component is disabled or not.
   * */
   @Input('disabled')
-  protected disabled: boolean;
-
-  /*
-  * Event emitter which is emitted when data should be submitted to server.
-  * */
-  @Output('search-items')
-  public search: EventEmitter<string>;
-
+  public disabled: boolean;
   /*
   * Custom item template.
   * */
@@ -159,7 +155,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   /*
   * How much time should component raise another one about its changes.
   * */
-  private _loadItemsInterval = 150;
+  private _loadItemsInterval = this._defaultItemsInterval;
 
   //#endregion
 
@@ -178,8 +174,14 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   public set keyword(value: string) {
     this._keyword = value;
 
+    // Initialize control update command.
+    const command: IUpdateMultiSelectorCommand = {
+      shouldIgnoreDuplicate: false,
+      shouldIgnoreInterval: false
+    };
+
     this._updateAvailableItemsSubject
-      .next(value);
+      .next(command);
   }
 
   /*
@@ -220,8 +222,8 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   @Input('interval')
   public set interval(value: number) {
 
-    if (value < 150) {
-      this._loadItemsInterval = 150;
+    if (value < this._defaultItemsInterval) {
+      this._loadItemsInterval = this._defaultItemsInterval;
       return;
     }
 
@@ -341,25 +343,50 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   * */
   public constructor() {
     this._selectedItems = [];
-    this.search = new EventEmitter<string>();
     this.items = [];
 
     // By default, items amount is limited to 10.
     this._maximumSelectableItems = 10;
 
-    this._updateAvailableItemsSubject = new BehaviorSubject(null);
+    this._updateAvailableItemsSubject = new ReplaySubject(1);
     this._updateAvailableItemsSubscription = this._updateAvailableItemsSubject
       .pipe(
-        map((keyword: string) => {
-          if (!keyword) {
-            return null;
+        debounce((command: IUpdateMultiSelectorCommand) => {
+
+          if (command.shouldIgnoreInterval) {
+            return EMPTY;
           }
 
-          return keyword.trim();
+          return timer(this._loadItemsInterval);
         }),
-        distinctUntilChanged(),
-        switchMap((keyword: string) => {
-          return this.loadAvailableItemsAsync(keyword);
+        map((command: IUpdateMultiSelectorCommand) => {
+
+          // Format keyword.
+          let keyword = this._keyword;
+          if (keyword && keyword.length) {
+            keyword = keyword.trim();
+          }
+
+          return {
+            keyword,
+            command
+          }
+        }),
+        distinctUntilChanged((previous: any, next: any) => {
+
+          // Get current command.
+          const nextCommand: IUpdateMultiSelectorCommand = next.command;
+
+          if (!nextCommand.shouldIgnoreDuplicate) {
+            // Values are equal, it will not emit the current value
+            return previous.keyword === next.keyword;
+          }
+
+          // Values are different, so it will emit
+          return false;
+        }),
+        switchMap((model: { keyword: string, command: IUpdateMultiSelectorCommand }) => {
+          return this.loadAvailableItemsAsync(model.keyword);
         })
       )
       .subscribe(availableItems => {
@@ -380,7 +407,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   /*
   * Check whether item has been chosen or not.
   * */
-  protected hasItemSelected(item: any): boolean {
+  public hasItemSelected(item: any): boolean {
     return this.loadSelectedItemIndex(item) != -1;
   }
 
@@ -401,7 +428,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   /*
   * Get title which is used for being displayed on search box.
   * */
-  protected loadSelectedItemsTitle(): string {
+  public loadSelectedItemsTitle(): string {
     if (this.selectedItems == null || this.selectedItems.length < 1) {
       return '';
     }
@@ -627,7 +654,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
   /*
   * Load item display.
   * */
-  protected loadItemDisplay(item: any): string {
+  public loadItemDisplay(item: any): string {
 
     // Get the display property.
     const displayProperty = this._displayProperty;
@@ -660,7 +687,7 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
     if (!item) {
       return item;
     }
-    
+
     // Get key.
     const key = this._key;
     if (!key || key.length < 1) {
@@ -680,7 +707,12 @@ export class NgxMultiSelectorComponent implements OnInit, OnDestroy, ControlValu
       return;
     }
 
-    return this._updateAvailableItemsSubject.next(' ');
+    const updateControlCommand: IUpdateMultiSelectorCommand = {
+      shouldIgnoreDuplicate: true,
+      shouldIgnoreInterval: true
+    };
+
+    return this._updateAvailableItemsSubject.next(updateControlCommand);
   }
 
   //#endregion

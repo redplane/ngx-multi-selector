@@ -10,22 +10,22 @@ export class ToggleOptionComponent implements OnInit {
 
   //#region Properties
 
-  private options: any;
+  public options: any;
 
   /*
   * List of customers.
   * */
-  protected customers: Array<any>;
+  public customers: Array<any>;
 
   /*
   * List of chosen items.
   * */
-  protected selectedCustomers: Array<any>;
+  public selectedCustomers: Array<any>;
 
   /*
   * Whether customers list has been loaded or not.
   * */
-  protected hasCustomersListLoaded = false;
+  public hasCustomersListLoaded = false;
 
   //#endregion
 
@@ -42,7 +42,8 @@ export class ToggleOptionComponent implements OnInit {
       placeholderSearchDropDown: '',
       placeholderTitleDropDown: '',
       separationCharacter: ' - ',
-      bDisabled: false
+      bDisabled: false,
+      interval: 250
     };
 
     this.selectedCustomers = [];

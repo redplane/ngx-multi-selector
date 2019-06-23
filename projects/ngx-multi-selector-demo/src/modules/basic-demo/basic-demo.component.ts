@@ -11,20 +11,20 @@ export class BasicDemoComponent implements OnInit {
   //#region Properties
 
   // List of customers.
-  protected customers: Array<any>;
+  public customers: Array<any>;
 
   // List of chosen customer.
-  protected chosenCustomers: Array<any> = [];
+  public chosenCustomers: Array<any> = [];
 
   /*
   * Whether customers list has been loaded or not.
   * */
-  protected hasCustomersListLoaded: boolean;
+  public hasCustomersListLoaded: boolean;
 
   /*
   * Basic demo source code.
   * */
-  protected get basicDemoSourceCode(): string {
+  public get basicDemoSourceCode(): string {
     return `
       <ngx-multi-selector [items]="customers"
                           [(ngModel)]="chosenCustomers"

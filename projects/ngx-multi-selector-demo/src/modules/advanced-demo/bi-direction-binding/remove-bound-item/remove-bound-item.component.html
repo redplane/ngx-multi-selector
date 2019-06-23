@@ -1,7 +1,8 @@
 <!--Remove bound items-->
 <div class="box box-primary">
   <div class="box-body">
-    <ngx-multi-selector [items]="customers"
+    <ngx-multi-selector #ngxMultiSelectorComponent="ngx-multi-selector"
+                        [items]="customers"
                         [(ngModel)]="selectedCustomers"
                         [display-property]="'firstName'"
                         [key]="'id'"

@@ -11,14 +11,14 @@ export class RandomItemSelectionComponent implements OnInit {
 
   //#region Properties
 
-  private _customers: Array<Customer>;
+  public _customers: Array<Customer>;
 
-  private _selectedCustomers: Array<Customer>;
+  public _selectedCustomers: Array<Customer>;
 
   /*
   * Whether customers list has been loaded or not.
   * */
-  protected hasCustomersListLoaded = false;
+  public hasCustomersListLoaded = false;
 
   //#endregion
 
@@ -27,7 +27,7 @@ export class RandomItemSelectionComponent implements OnInit {
   /*
   * Original list of customers to be selected.
   * */
-  protected set customers(values: Array<Customer>) {
+  public set customers(values: Array<Customer>) {
     if (!values || !values.length) {
       this._customers = [];
       return;
@@ -39,14 +39,14 @@ export class RandomItemSelectionComponent implements OnInit {
   /*
   * Get the list of loaded customers.
   * */
-  protected get customers(): Array<Customer> {
+  public get customers(): Array<Customer> {
     return this._customers;
   }
 
   /*
   * Set the selected customers.
   * */
-  protected set selectedCustomers(values: Array<Customer>) {
+  public set selectedCustomers(values: Array<Customer>) {
     if (!values || !values.length) {
       this._selectedCustomers = [];
       return;
@@ -58,14 +58,14 @@ export class RandomItemSelectionComponent implements OnInit {
   /*
   * Get the selected customers.
   * */
-  protected get selectedCustomers(): Array<Customer> {
+  public get selectedCustomers(): Array<Customer> {
     return this._selectedCustomers;
   }
 
   /*
   * Whether any customer has been selected or not.
   * */
-  protected get hasCustomerSelected(): boolean {
+  public get hasCustomerSelected(): boolean {
 
     if (!this.selectedCustomers || !this.selectedCustomers.length) {
       return false;

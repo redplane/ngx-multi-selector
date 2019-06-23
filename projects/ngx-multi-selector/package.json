@@ -1,22 +1,29 @@
 {
-  "name": "ngrx-message-bus",
-  "version": "1.0.0",
+  "name": "ngx-multi-selector",
+  "version": "3.0.5",
+  "description": "A small plugin which generates multi-selector control, it supports web api loading. Only supported angular 5.",
   "peerDependencies": {
+    "@angular/core": "^6.1.0",
+    "@angular/common": "^6.1.0",
     "rxjs": "^6.3.0"
   },
-  "author": {
-    "name": "Nguyen Duy Linh",
-    "email": "redplane_dt@yahoo.com.vn",
-    "url": "https://nguyen-duy-linh.netlify.com"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/redplane/ngx-multi-selector"
   },
-  "bugs": "https://github.com/redplane/rx-message-bus/issues",
-  "repository": "https://github.com/redplane/rx-message-bus",
   "keywords": [
-    "ngrx-message-bus",
-    "rx-message-bus",
-    "ngrx",
-    "message-bus",
-    "shared-service",
-    "shared service"
-  ]
+    "ngx-multi-selector",
+    "multi-selector",
+    "multi-drop-down",
+    "drop-down",
+    "angular-6-drop-down",
+    "angular6-dropdown",
+    "multi selector"
+  ],
+  "author": "Linh Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/redplane/ngx-multi-selector/issues"
+  },
+  "homepage": "https://github.com/redplane/ngx-multi-selector#readme"
 }

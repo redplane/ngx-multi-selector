@@ -11,12 +11,12 @@ export class DataSourceComponent implements OnInit{
   //#region Properties
 
   // List of customers.
-  protected customers: Array<any>;
+  public customers: Array<any>;
 
   /*
   * Whether customers list has been loaded or not.
   * */
-  protected hasCustomersListLoaded: boolean;
+  public hasCustomersListLoaded: boolean;
 
   //#endregion
 
